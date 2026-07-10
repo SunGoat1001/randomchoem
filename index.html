@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Random Number Generator</title>
+    <style>
+      :root {
+        color-scheme: light dark;
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #f3f4f6;
+        color: #111827;
+      }
+
+      .app {
+        width: min(92vw, 420px);
+        background: #ffffff;
+        border-radius: 14px;
+        padding: 1rem;
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        margin: 0 0 0.75rem;
+        font-size: 1.25rem;
+      }
+
+      .field {
+        margin-bottom: 0.75rem;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 0.25rem;
+        font-size: 0.95rem;
+      }
+
+      input {
+        width: 100%;
+        box-sizing: border-box;
+        border: 1px solid #d1d5db;
+        border-radius: 10px;
+        padding: 0.7rem;
+        font-size: 1rem;
+      }
+
+      button {
+        width: 100%;
+        border: 0;
+        border-radius: 10px;
+        background: #2563eb;
+        color: #fff;
+        padding: 0.75rem;
+        font-size: 1rem;
+        font-weight: 600;
+      }
+
+      #error {
+        color: #b91c1c;
+        min-height: 1.4rem;
+        margin: 0.75rem 0 0;
+      }
+
+      #result {
+        margin: 0.25rem 0 0;
+        word-break: break-word;
+        font-size: 1rem;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background: #111827;
+          color: #f3f4f6;
+        }
+
+        .app {
+          background: #1f2937;
+          box-shadow: none;
+        }
+
+        input {
+          border-color: #4b5563;
+          background: #111827;
+          color: #f3f4f6;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="app">
+      <h1>Random Number</h1>
+
+      <div class="field">
+        <label for="start">Start</label>
+        <input id="start" type="number" inputmode="numeric" value="1" />
+      </div>
+
+      <div class="field">
+        <label for="end">End</label>
+        <input id="end" type="number" inputmode="numeric" value="100" />
+      </div>
+
+      <div class="field">
+        <label for="count">Number of randoms</label>
+        <input id="count" type="number" inputmode="numeric" min="1" value="1" />
+      </div>
+
+      <button id="generate" type="button">Generate</button>
+      <p id="error" aria-live="polite"></p>
+      <p id="result" aria-live="polite"></p>
+    </main>
+
+    <script>
+      const startInput = document.getElementById('start');
+      const endInput = document.getElementById('end');
+      const countInput = document.getElementById('count');
+      const errorOutput = document.getElementById('error');
+      const resultOutput = document.getElementById('result');
+      const generateButton = document.getElementById('generate');
+
+      function randomInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+      }
+
+      function generateRandoms() {
+        const start = Number(startInput.value);
+        const end = Number(endInput.value);
+        const count = Number(countInput.value);
+
+        errorOutput.textContent = '';
+        resultOutput.textContent = '';
+
+        if (!Number.isInteger(start) || !Number.isInteger(end)) {
+          errorOutput.textContent = 'Start and end must be integers.';
+          return;
+        }
+
+        if (!Number.isInteger(count) || count < 1) {
+          errorOutput.textContent = 'Number of randoms must be a positive integer.';
+          return;
+        }
+
+        if (start > end) {
+          errorOutput.textContent = 'Start must be less than or equal to end.';
+          return;
+        }
+
+        const values = [];
+        for (let i = 0; i < count; i += 1) {
+          values.push(randomInt(start, end));
+        }
+
+        resultOutput.textContent = values.join(', ');
+      }
+
+      generateButton.addEventListener('click', generateRandoms);
+    </script>
+  </body>
+</html>
