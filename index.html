@@ -1,802 +1,572 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="vi">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" id="theme-color" content="#fff5f9" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-  <meta name="title" content="Random Number cho riêng BU" />
-  <meta name="description" content="Random số nhanh chóng, dễ thương, dành riêng cho Bảo Uyên." />
-  <meta name="author" content="Le Pham Ngoc Tien / Leonardo Le Pham" />
-  <meta property="og:title" content="Random Number cho riêng BU" />
-  <meta property="og:description" content="Một chiếc random số nho nhỏ dành cho Bảo Uyên." />
-  <meta property="og:image" content="/banner.avif" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Random Number cho riêng BU" />
-  <meta name="twitter:description" content="Một chiếc random số nho nhỏ dành cho Bảo Uyên." />
-  <meta name="twitter:image" content="/banner.avif" />
-  <title>Random Number · Cho Bảo Uyên</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#fff0f6">
+  <meta name="description" content="Random Number dành riêng cho Bảo Uyên, được làm bởi Ngọc Tiến.">
+  <meta property="og:title" content="Random Number cho riêng BU">
+  <meta property="og:image" content="/banner.avif">
+  <title>Random Number cho Bảo Uyên 💗</title>
+
   <style>
     :root {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       color-scheme: light;
-      --bg: #fff5f9;
-      --surface: #fff;
-      --surface-muted: #fff6fa;
-      --text: #35202c;
-      --muted: #8e7481;
-      --border: #f4dce7;
-      --primary: #d84283;
-      --primary-hover: #bb2d6c;
-      --primary-soft: #ffe7f1;
-      --accent: #fa9bc0;
-      --shadow: 0 24px 65px rgba(167, 54, 107, .11);
-      --error: #b4234b;
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif;
-      -webkit-font-smoothing: antialiased;
+      --accent: #ed5b99;
+      --accent-rgb: 237, 91, 153;
+      --bg: #fff0f6;
+      --surface: #ffffff;
+      --surface-alt: #fff5f9;
+      --text: #372432;
+      --muted: #8e7484;
+      --border: #f5dce7;
+      --shadow: 0 18px 55px rgba(146, 48, 93, .10);
     }
 
     * {
-      box-sizing: border-box
+      box-sizing: border-box;
     }
 
     html {
-      min-height: 100%;
-      -webkit-text-size-adjust: 100%
+      -webkit-text-size-adjust: 100%;
+      scroll-behavior: smooth;
     }
 
     body {
-      min-height: 100vh;
-      min-height: 100svh;
       margin: 0;
+      min-height: 100vh;
+      min-height: 100dvh;
+      padding:
+        max(24px, env(safe-area-inset-top)) 16px max(28px, env(safe-area-inset-bottom));
+      background:
+        radial-gradient(circle at 10% 0%,
+          rgba(var(--accent-rgb), .15),
+          transparent 45%),
+        var(--bg);
       color: var(--text);
-      background: radial-gradient(ellipse 75% 38% at 5% -5%, var(--glow1, #ffd7e9) 0%, transparent 85%),
-        radial-gradient(ellipse 80% 45% at 105% 100%, var(--glow2, #ffe1ed) 0%, transparent 85%), var(--bg);
+      transition: background .3s, color .3s;
     }
 
     button,
     input {
-      font: inherit
+      font: inherit;
     }
 
     button {
       -webkit-tap-highlight-color: transparent;
-      touch-action: manipulation
+      touch-action: manipulation;
+      cursor: pointer;
     }
 
-    .page {
-      min-height: 100vh;
-      min-height: 100svh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: max(28px, env(safe-area-inset-top)) max(18px, env(safe-area-inset-right)) max(32px, env(safe-area-inset-bottom)) max(18px, env(safe-area-inset-left));
+    button:focus-visible,
+    input:focus-visible {
+      outline: 3px solid rgba(var(--accent-rgb), .35);
+      outline-offset: 3px;
     }
 
     .app {
-      width: min(100%, 460px);
-      padding: clamp(23px, 5.5vw, 38px);
-      background: var(--surface);
-      border: 1px solid rgba(255, 255, 255, .72);
-      border-radius: 32px;
-      box-shadow: var(--shadow);
+      width: 100%;
+      max-width: 460px;
+      margin: 0 auto;
     }
 
-    .topline {
+    .header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 12px
+      gap: 12px;
+      margin-bottom: 24px;
     }
 
     .eyebrow {
-      margin: 0;
       font-size: 12px;
-      font-weight: 800;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      color: var(--accent);
       text-transform: uppercase;
-      letter-spacing: .14em;
-      color: var(--primary)
-    }
-
-    .heart {
-      display: grid;
-      place-items: center;
-      width: 39px;
-      height: 39px;
-      border-radius: 14px;
-      color: #d3558b;
-      background: #ffedf4;
-      font-size: 21px
     }
 
     h1 {
-      margin: 13px 0 8px;
-      font-weight: 800;
-      font-size: clamp(28px, 7.2vw, 37px);
-      line-height: 1.13;
-      letter-spacing: -.05em
-    }
-
-    h1 span {
-      color: var(--primary)
+      margin: 8px 0 5px;
+      font-size: clamp(25px, 7vw, 33px);
+      line-height: 1.2;
+      letter-spacing: -.8px;
     }
 
     .subtitle {
+      margin: 0;
       color: var(--muted);
       font-size: 14px;
-      line-height: 1.55;
-      margin: 0 0 27px
+      line-height: 1.6;
     }
 
-    .section-label {
-      display: block;
-      font-size: 12px;
-      font-weight: 800;
-      letter-spacing: .035em;
-      margin: 0 0 12px
+    .header-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      flex-shrink: 0;
     }
 
-    .range-grid {
+    .icon-btn {
+      width: 45px;
+      height: 45px;
       display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-      gap: 12px
+      place-items: center;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: var(--surface);
+      color: var(--text);
+      box-shadow: var(--shadow);
+      font-size: 21px;
     }
 
-    .field label {
+    .card {
+      padding: 22px;
+      margin-bottom: 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 26px;
+      box-shadow: var(--shadow);
+    }
+
+    .card-title {
+      margin: 0 0 18px;
+      font-size: 16px;
+      font-weight: 750;
+    }
+
+    .field-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 13px;
+    }
+
+    .field {
+      margin-bottom: 18px;
+    }
+
+    .field-grid .field {
+      margin-bottom: 0;
+    }
+
+    .field-label {
       display: block;
-      margin-bottom: 8px;
-      font-weight: 650;
+      margin-bottom: 9px;
+      color: var(--muted);
       font-size: 13px;
-      color: var(--muted)
+      font-weight: 600;
     }
 
-    .input-wrap {
-      position: relative
-    }
-
-    .input-wrap input {
+    input[type="number"] {
       display: block;
       width: 100%;
       min-width: 0;
-      height: 58px;
-      padding: 0 15px;
+      height: 54px;
+      padding: 0 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 15px;
+      background: var(--surface-alt);
+      color: var(--text);
+      font-size: 17px;
+      font-weight: 650;
+      outline: none;
+      transition: border-color .2s;
+    }
+
+    input[type="number"]:focus {
+      border-color: var(--accent);
+    }
+
+    .count-field {
+      margin-top: 19px;
+    }
+
+    .mode-heading {
+      margin: 22px 0 11px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .duplicate-options {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .option {
+      position: relative;
+      cursor: pointer;
+    }
+
+    .option input {
+      position: absolute;
+      opacity: 0;
+      width: 1px;
+      height: 1px;
+    }
+
+    .option-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 88px;
+      padding: 13px;
+      gap: 6px;
       border: 1.5px solid var(--border);
       border-radius: 17px;
-      outline: 0;
-      background: var(--surface-muted);
-      color: var(--text);
-      font-size: 18px;
-      font-weight: 750;
-      font-variant-numeric: tabular-nums;
-      transition: border-color .15s, box-shadow .15s
+      background: var(--surface-alt);
+      transition: .2s;
     }
 
-    input:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 4px rgba(128, 97, 232, .12)
+    .option strong {
+      font-size: 13px;
     }
 
-    input::-webkit-inner-spin-button,
-    input::-webkit-outer-spin-button {
-      -webkit-appearance: none;
-      margin: 0
+    .option small {
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.5;
     }
 
-    input[type=number] {
-      -moz-appearance: textfield;
-      appearance: textfield
+    .option input:checked+.option-content {
+      border-color: var(--accent);
+      background: rgba(var(--accent-rgb), .09);
+      box-shadow: inset 0 0 0 1px var(--accent);
     }
 
-    .count-section {
-      margin-top: 23px
+    .option input:focus-visible+.option-content {
+      outline: 3px solid rgba(var(--accent-rgb), .35);
+      outline-offset: 3px;
     }
 
-    .count-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px
+    .hint {
+      margin: 12px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.6;
     }
 
-    .stepper {
+    .saved-note {
       display: flex;
       align-items: center;
       gap: 7px;
-      padding: 5px;
-      background: var(--surface-muted);
-      border: 1px solid var(--border);
-      border-radius: 18px
+      margin: 16px 0 0;
+      color: var(--muted);
+      font-size: 12px;
     }
 
-    .stepper button {
-      width: 45px;
-      height: 45px;
-      border: 0;
-      border-radius: 13px;
-      color: var(--primary);
-      background: var(--surface);
-      font-size: 25px;
-      font-weight: 500;
-      cursor: pointer
+    .saved-note span:first-child {
+      color: #32a37c;
     }
 
-    .stepper button:active {
-      transform: scale(.95)
-    }
-
-    .stepper input {
-      width: 49px;
-      height: 45px;
-      padding: 0;
-      border: 0;
-      outline: 0;
-      background: transparent;
-      box-shadow: none;
-      text-align: center;
-      font-size: 20px;
-      font-weight: 800;
-      color: var(--text);
-      font-variant-numeric: tabular-nums
-    }
-
-    .generate {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
+    .generate-btn {
+      display: block;
       width: 100%;
-      min-height: 60px;
-      margin-top: 26px;
-      padding: 13px 16px;
-      border: none;
-      border-radius: 19px;
-      background: linear-gradient(110deg, #9676f3 0%, #7657dc 100%);
+      min-height: 58px;
+      margin-top: 22px;
+      padding: 15px;
+      border: 0;
+      border-radius: 17px;
+      background: var(--accent);
       color: white;
       font-size: 16px;
-      font-weight: 800;
-      box-shadow: 0 12px 23px rgba(113, 78, 217, .24);
-      cursor: pointer;
-      transition: transform .15s, filter .15s
-    }
-
-    .generate:hover {
-      filter: brightness(1.035)
-    }
-
-    .generate:active {
-      transform: scale(.985)
-    }
-
-    button:focus-visible {
-      outline: 3px solid var(--accent);
-      outline-offset: 3px
-    }
-
-    .result-panel {
-      margin-top: 22px;
-      padding: 19px 18px 20px;
-      min-height: 151px;
-      border: 1px solid #ebe4fc;
-      border-radius: 23px;
-      background: linear-gradient(145deg, #faf7ff, #f5f0ff);
-      text-align: center
-    }
-
-    .result-heading {
-      color: #78679c;
-      font-size: 12px;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      font-weight: 800
-    }
-
-    .placeholder {
-      margin-top: 24px;
-      color: #a49ab7;
-      font-size: 14px;
-      line-height: 1.4
-    }
-
-    .results {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 8px;
-      margin: 19px 0 0;
-      padding: 0;
-      list-style: none;
-      max-height: 220px;
-      overflow: auto;
-      -webkit-overflow-scrolling: touch
-    }
-
-    .results li {
-      min-width: 54px;
-      max-width: 100%;
-      padding: 8px 13px;
-      border-radius: 13px;
-      background: #fff;
-      color: #6747ce;
-      font-size: 22px;
-      font-weight: 850;
-      font-variant-numeric: tabular-nums;
-      overflow-wrap: anywhere;
-      animation: pop .22s ease both
-    }
-
-    .results.single li {
-      background: transparent;
-      padding: 0;
-      font-size: clamp(50px, 16vw, 76px);
-      letter-spacing: -.055em;
-      line-height: 1.2
-    }
-
-    .result-bottom {
-      display: flex;
-      justify-content: center;
-      margin-top: 14px
-    }
-
-    .copy {
-      border: 0;
-      border-radius: 10px;
-      padding: 9px 13px;
-      background: #ebe3ff;
-      color: #694ec2;
-      font-size: 12px;
       font-weight: 750;
-      cursor: pointer
+      box-shadow: 0 9px 23px rgba(var(--accent-rgb), .25);
+      transition: transform .15s, opacity .15s;
+    }
+
+    .generate-btn:active {
+      transform: scale(.98);
     }
 
     .error {
-      min-height: 0;
-      margin: 11px 0 0;
-      color: var(--error);
+      margin: 12px 0 0;
+      color: #e04459;
       font-size: 13px;
-      line-height: 1.45;
-      font-weight: 600
+      line-height: 1.5;
     }
 
     .error:empty {
-      display: none
+      display: none;
     }
 
-    .footer {
+    .result-card {
       text-align: center;
-      margin: 22px 0 0;
+    }
+
+    .result-label {
+      margin: 0 0 15px;
       color: var(--muted);
-      font-size: 12px
+      font-size: 13px;
+      font-weight: 600;
     }
 
-    .footer strong {
-      color: #a061af
+    .result-value {
+      min-height: 88px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 9px;
+      overflow-wrap: anywhere;
     }
 
-    [hidden] {
-      display: none !important
+    .number {
+      color: var(--accent);
+      font-size: clamp(36px, 10vw, 62px);
+      font-weight: 800;
+      letter-spacing: -2px;
+      font-variant-numeric: tabular-nums;
+      animation: pop .25s ease-out both;
+    }
+
+    .number.multiple {
+      padding: 9px 15px;
+      border-radius: 13px;
+      background: rgba(var(--accent-rgb), .10);
+      font-size: 23px;
+      letter-spacing: 0;
+    }
+
+    .placeholder {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .result-meta {
+      margin: 12px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .copy-btn {
+      width: 100%;
+      min-height: 46px;
+      margin-top: 18px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--surface-alt);
+      color: var(--accent);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .copy-btn:disabled {
+      opacity: .45;
+      cursor: default;
+    }
+
+    /*
+      BẢNG CHỌN MÀU TẠM THỜI VÔ HIỆU HÓA.
+
+      .palette { display: flex; gap: 13px; }
+      .color-btn { border-radius: 50%; }
+    */
+
+    footer {
+      padding: 10px 0 20px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    /* =====================================
+       INTERACTIVE ONBOARDING / SPOTLIGHT
+       ===================================== */
+
+    .tour-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: rgba(20, 12, 24, .70);
+      -webkit-backdrop-filter: blur(2px);
+      backdrop-filter: blur(2px);
+    }
+
+    .tour-overlay[hidden],
+    .tour-panel[hidden],
+    .tour-spotlight[hidden] {
+      display: none;
+    }
+
+    .tour-spotlight {
+      position: fixed;
+      z-index: 1001;
+      pointer-events: none;
+      border: 2px solid #ff8fbd;
+      border-radius: 18px;
+      box-shadow:
+        0 0 0 5px rgba(255, 143, 189, .22),
+        0 0 28px rgba(255, 143, 189, .3);
+      transition:
+        top .25s ease,
+        left .25s ease,
+        width .25s ease,
+        height .25s ease;
+    }
+
+    .tour-panel {
+      position: fixed;
+      z-index: 1002;
+      width: min(390px, calc(100vw - 32px));
+      max-height: min(390px, 55dvh);
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      padding: 20px;
+      border: 1px solid var(--border);
+      border-radius: 23px;
+      background: var(--surface);
+      color: var(--text);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, .22);
+      animation: popIn .25s ease;
+    }
+
+    .tour-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 13px;
+    }
+
+    .tour-counter {
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 750;
+    }
+
+    .tour-skip {
+      padding: 6px 2px;
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .tour-progress {
+      display: flex;
+      gap: 5px;
+      margin-bottom: 17px;
+    }
+
+    .tour-progress span {
+      height: 5px;
+      flex: 1;
+      border-radius: 5px;
+      background: var(--border);
+      transition: background .2s;
+    }
+
+    .tour-progress span.active {
+      background: var(--accent);
+    }
+
+    .tour-title {
+      margin: 0 0 8px;
+      font-size: 19px;
+      font-weight: 800;
+      line-height: 1.35;
+    }
+
+    .tour-description {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.75;
+    }
+
+    .tour-description strong {
+      color: var(--text);
+    }
+
+    .tour-actions {
+      display: flex;
+      gap: 9px;
+      margin-top: 19px;
+    }
+
+    .tour-back {
+      min-width: 84px;
+      min-height: 46px;
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      background: var(--surface-alt);
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .tour-next {
+      flex: 1;
+      min-height: 46px;
+      padding: 10px 14px;
+      border: 0;
+      border-radius: 13px;
+      background: var(--accent);
+      color: white;
+      font-size: 14px;
+      font-weight: 750;
+    }
+
+    .tour-welcome {
+      text-align: center;
+      font-size: 36px;
+      margin-bottom: 8px;
     }
 
     @keyframes pop {
       from {
-        opacity: .5;
-        transform: translateY(7px) scale(.95)
+        opacity: 0;
+        transform: scale(.88);
       }
 
       to {
         opacity: 1;
-        transform: translateY(0) scale(1)
+        transform: scale(1);
       }
     }
 
-    @media (max-width: 480px) {
-      .page {
-        align-items: flex-start;
-        padding-top: max(24px, calc(env(safe-area-inset-top) + 16px));
-        padding-bottom: max(24px, calc(env(safe-area-inset-bottom) + 16px))
+    @keyframes popIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px) scale(.97);
       }
 
-      .app {
-        border-radius: 27px;
-        padding: 25px 22px
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
       }
+    }
+
+    body.dark {
+      color-scheme: dark;
+      --bg: #17121a;
+      --surface: #241d27;
+      --surface-alt: #302632;
+      --text: #fff1f7;
+      --muted: #bca8b6;
+      --border: #443344;
+      --shadow: 0 14px 40px rgba(0, 0, 0, .16);
     }
 
     @media (max-width: 350px) {
-      .app {
-        padding: 20px 16px
+      .card {
+        padding: 17px;
       }
 
-      .stepper button {
-        width: 39px
+      .option-content {
+        padding: 10px;
       }
 
-      .stepper input {
-        width: 36px
-      }
-    }
-
-    /* Color palettes share the same components; light/dark is a separate setting. */
-    :root {
-      --glow1: #ffd7e9;
-      --glow2: #ffe1ed;
-      --primary-strong: #c52e70;
-      --panel: #fff0f6;
-      --chip: #ffffff;
-      --on-primary: #ffffff;
-      --focus-ring: rgba(216, 66, 131, .19)
-    }
-
-    :root[data-color="peach"] {
-      --bg: #fff8f3;
-      --surface-muted: #fff7f1;
-      --border: #f3ded1;
-      --primary: #cf684a;
-      --primary-hover: #b35439;
-      --primary-strong: #b65337;
-      --primary-soft: #fff0e8;
-      --accent: #f6ae91;
-      --glow1: #ffe2d4;
-      --glow2: #ffeddf;
-      --panel: #fff2ea;
-      --focus-ring: rgba(207, 104, 74, .19)
-    }
-
-    :root[data-color="lilac"] {
-      --bg: #faf6ff;
-      --surface-muted: #f8f2ff;
-      --border: #eadef3;
-      --primary: #8755ca;
-      --primary-hover: #7545b8;
-      --primary-strong: #7844b8;
-      --primary-soft: #f1e9ff;
-      --accent: #bda1e9;
-      --glow1: #eadbff;
-      --glow2: #f7e4f5;
-      --panel: #f5edff;
-      --focus-ring: rgba(135, 85, 202, .19)
-    }
-
-    :root[data-color="mint"] {
-      --bg: #f3fcf8;
-      --surface-muted: #f1fbf6;
-      --border: #d5eae2;
-      --primary: #198b78;
-      --primary-hover: #147663;
-      --primary-strong: #087666;
-      --primary-soft: #dff8f0;
-      --accent: #80d5bc;
-      --glow1: #d6faed;
-      --glow2: #e9f8e8;
-      --panel: #eafaf3;
-      --focus-ring: rgba(25, 139, 120, .19)
-    }
-
-    :root[data-color="blue"] {
-      --bg: #f4f9ff;
-      --surface-muted: #f0f7ff;
-      --border: #d8e6f5;
-      --primary: #347aca;
-      --primary-hover: #2465b1;
-      --primary-strong: #2468b5;
-      --primary-soft: #e5f1ff;
-      --accent: #95c3fb;
-      --glow1: #daeaff;
-      --glow2: #e8f1ff;
-      --panel: #edf5ff;
-      --focus-ring: rgba(52, 122, 202, .19)
-    }
-
-    :root[data-mode="dark"] {
-      color-scheme: dark;
-      --bg: #19131a;
-      --surface: #281e28;
-      --surface-muted: #332631;
-      --text: #fff0f6;
-      --muted: #cdb4c2;
-      --border: #503a48;
-      --shadow: 0 24px 65px rgba(0, 0, 0, .28);
-      --error: #ffabc4;
-      --panel: #362531;
-      --chip: #483344;
-      --on-primary: #fff;
-      --glow1: #3f1e32;
-      --glow2: #382332
-    }
-
-    :root[data-mode="dark"][data-color="peach"] {
-      --bg: #1d1715;
-      --surface: #29211e;
-      --surface-muted: #382b26;
-      --text: #fff3eb;
-      --muted: #d4bdb1;
-      --border: #594137;
-      --panel: #3b2b24;
-      --chip: #50382e;
-      --glow1: #483026;
-      --glow2: #36251e
-    }
-
-    :root[data-mode="dark"][data-color="lilac"] {
-      --bg: #17131f;
-      --surface: #231e2e;
-      --surface-muted: #30283d;
-      --text: #f6f0ff;
-      --muted: #c4b6d6;
-      --border: #4c405f;
-      --panel: #322740;
-      --chip: #443555;
-      --glow1: #35244b;
-      --glow2: #302337
-    }
-
-    :root[data-mode="dark"][data-color="mint"] {
-      --bg: #121c1a;
-      --surface: #1c2925;
-      --surface-muted: #283933;
-      --text: #eafff7;
-      --muted: #adcfc3;
-      --border: #395a4d;
-      --panel: #213e35;
-      --chip: #305146;
-      --glow1: #1c4537;
-      --glow2: #20362d
-    }
-
-    :root[data-mode="dark"][data-color="blue"] {
-      --bg: #131a25;
-      --surface: #1d2838;
-      --surface-muted: #29364a;
-      --text: #edf5ff;
-      --muted: #b5c7dd;
-      --border: #3c506c;
-      --panel: #243651;
-      --chip: #324763;
-      --glow1: #213955;
-      --glow2: #252c48
-    }
-
-    :root[data-mode="dark"][data-color="rose"] {
-      --primary: #ff82b6;
-      --primary-hover: #ff9ac5;
-      --primary-strong: #ff9ac5;
-      --primary-soft: #4a2c3c
-    }
-
-    :root[data-mode="dark"][data-color="peach"] {
-      --primary: #ffa786;
-      --primary-hover: #ffbd9e;
-      --primary-strong: #ffbd9e;
-      --primary-soft: #493127
-    }
-
-    :root[data-mode="dark"][data-color="lilac"] {
-      --primary: #c7a6ff;
-      --primary-hover: #d8bfff;
-      --primary-strong: #d8bfff;
-      --primary-soft: #433259
-    }
-
-    :root[data-mode="dark"][data-color="mint"] {
-      --primary: #77dec3;
-      --primary-hover: #a0efd9;
-      --primary-strong: #a0efd9;
-      --primary-soft: #234b40
-    }
-
-    :root[data-mode="dark"][data-color="blue"] {
-      --primary: #91c5ff;
-      --primary-hover: #b0d6ff;
-      --primary-strong: #b0d6ff;
-      --primary-soft: #2c4561
-    }
-
-    .app {
-      border-color: var(--border)
-    }
-
-    .heart {
-      background: var(--primary-soft);
-      color: var(--primary)
-    }
-
-    .eyebrow {
-      font-size: 11px;
-      letter-spacing: .1em
-    }
-
-    .theme-icon {
-      width: 21px;
-      height: 21px;
-      display: block;
-      stroke: currentColor;
-      fill: none;
-      stroke-width: 1.9;
-      stroke-linecap: round;
-      stroke-linejoin: round
-    }
-
-    .mode-toggle {
-      height: 44px;
-      min-width: 44px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      background: var(--surface-muted);
-      border: 1px solid var(--border);
-      border-radius: 15px;
-      color: var(--text);
-      cursor: pointer;
-      padding: 0 12px
-    }
-
-    .mode-toggle .icon-sun {
-      display: none
-    }
-
-    :root[data-mode="dark"] .mode-toggle .icon-sun {
-      display: block
-    }
-
-    :root[data-mode="dark"] .mode-toggle .icon-moon {
-      display: none
-    }
-
-    .mode-text {
-      font-size: 12px;
-      font-weight: 750
-    }
-
-    .settings {
-      margin: 0 0 23px;
-      padding: 15px;
-      background: var(--surface-muted);
-      border: 1px solid var(--border);
-      border-radius: 20px
-    }
-
-    .settings-heading {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      margin: 0 0 12px
-    }
-
-    .settings-heading strong {
-      font-size: 13px
-    }
-
-    .settings-heading small {
-      font-size: 11px;
-      color: var(--muted)
-    }
-
-    .palette {
-      display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
-      gap: 5px
-    }
-
-    .swatch {
-      border: 2px solid transparent;
-      border-radius: 13px;
-      background: transparent;
-      color: var(--muted);
-      padding: 7px 1px 5px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
-      font-size: 10px;
-      font-weight: 700;
-      cursor: pointer;
-      min-width: 0
-    }
-
-    .swatch-circle {
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      background: var(--swatch);
-      border: 2px solid rgba(255, 255, 255, .58);
-      box-shadow: 0 1px 5px rgba(0, 0, 0, .12)
-    }
-
-    .swatch[aria-pressed="true"] {
-      border-color: var(--primary);
-      background: var(--primary-soft);
-      color: var(--primary-strong)
-    }
-
-    .swatch[aria-pressed="true"] .swatch-circle::after {
-      content: '✓';
-      font-size: 17px;
-      color: #fff;
-      font-weight: 800;
-      text-shadow: 0 1px 3px rgba(0, 0, 0, .3)
-    }
-
-    .swatch:focus-visible,
-    .mode-toggle:focus-visible {
-      outline: 3px solid var(--accent);
-      outline-offset: 2px
-    }
-
-    .input-wrap input:focus {
-      box-shadow: 0 0 0 4px var(--focus-ring)
-    }
-
-    .generate {
-      background: linear-gradient(115deg, var(--primary), var(--primary-hover));
-      box-shadow: 0 12px 23px var(--focus-ring);
-      color: var(--on-primary)
-    }
-
-    :root[data-mode="dark"] .generate {
-      color: #21151c
-    }
-
-    .result-panel {
-      border-color: var(--border);
-      background: var(--panel)
-    }
-
-    .result-heading {
-      color: var(--primary-strong)
-    }
-
-    .placeholder {
-      color: var(--muted)
-    }
-
-    .results li {
-      background: var(--chip);
-      color: var(--primary-strong)
-    }
-
-    .results.single li {
-      background: transparent
-    }
-
-    .copy {
-      background: var(--primary-soft);
-      color: var(--primary-strong)
-    }
-
-    .footer strong {
-      color: var(--primary)
-    }
-
-    @media(max-width:380px) {
-      .mode-text {
-        display: none
+      .option strong {
+        font-size: 12px;
       }
 
-      .mode-toggle {
-        padding: 0;
-        width: 44px
-      }
-
-      .swatch-circle {
-        width: 27px;
-        height: 27px
-      }
-
-      .swatch {
-        font-size: 9px
-      }
-
-      .settings {
-        padding: 10px
-      }
-
-      .app {
-        padding: 23px 17px
+      .tour-panel {
+        padding: 16px;
       }
     }
 
@@ -806,192 +576,1030 @@
       *::before,
       *::after {
         animation-duration: .01ms !important;
-        transition-duration: .01ms !important
+        transition-duration: .01ms !important;
+        scroll-behavior: auto !important;
       }
     }
   </style>
 </head>
 
 <body>
-  <div class="page">
-    <main class="app">
-      <div class="topline">
-        <p class="eyebrow">A little something for BU ♡</p>
-        <button type="button" class="mode-toggle" id="mode-toggle" aria-label="Chuyển sang giao diện tối"
-          aria-pressed="false" title="Chuyển sáng / tối">
-          <svg class="theme-icon icon-moon" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5a8.5 8.5 0 1 0 10.7 10.7Z" />
-          </svg>
-          <svg class="theme-icon icon-sun" viewBox="0 0 24 24" aria-hidden="true">
-            <circle cx="12" cy="12" r="4" />
-            <path
-              d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42" />
-          </svg>
-          <span class="mode-text" id="mode-label">Chế độ tối</span>
-        </button>
+  <main class="app" id="mainApp">
+    <header class="header">
+      <div>
+        <div class="eyebrow">Made with love ♡</div>
+        <h1>Random cho cục cưng Bảo Uyên 💗</h1>
+        <p class="subtitle">
+          Một chút ngẫu nhiên, dành riêng cho em.
+        </p>
       </div>
-      <h1>Random số<br />cho <span>cục cưng Bảo Uyên.</span></h1>
-      <p class="subtitle">Một chút ngẫu nhiên, một chút đáng yêu. Chọn khoảng số rồi để may mắn quyết định nhé!</p>
-      <!-- <section class="settings" aria-label="Tùy chỉnh màu giao diện">
-        <div class="settings-heading"><strong>Chọn màu yêu thích</strong><small>Chạm để đổi màu ngay</small></div>
-        <div class="palette" role="group" aria-label="Bảng màu">
-          <button type="button" class="swatch" data-palette="rose" aria-label="Màu hồng" aria-pressed="true"><span
-              class="swatch-circle" style="--swatch:#f36b9e"></span><span>Hồng</span></button>
-          <button type="button" class="swatch" data-palette="peach" aria-label="Màu đào" aria-pressed="false"><span
-              class="swatch-circle" style="--swatch:#f49a73"></span><span>Đào</span></button>
-          <button type="button" class="swatch" data-palette="lilac" aria-label="Màu tím" aria-pressed="false"><span
-              class="swatch-circle" style="--swatch:#ab82ea"></span><span>Tím</span></button>
-          <button type="button" class="swatch" data-palette="mint" aria-label="Màu xanh mint" aria-pressed="false"><span
-              class="swatch-circle" style="--swatch:#56c5a4"></span><span>Mint</span></button>
-          <button type="button" class="swatch" data-palette="blue" aria-label="Màu xanh dương"
-            aria-pressed="false"><span class="swatch-circle" style="--swatch:#69a7ef"></span><span>Xanh</span></button>
+
+      <div class="header-actions">
+        <button id="themeToggle" class="icon-btn" type="button" aria-label="Chuyển chế độ sáng tối"
+          title="Chuyển chế độ sáng tối">☾</button>
+
+        <button id="helpButton" class="icon-btn" type="button" aria-label="Xem lại hướng dẫn"
+          title="Xem lại hướng dẫn">?</button>
+      </div>
+    </header>
+
+    <section class="card" aria-labelledby="settingsTitle">
+      <h2 id="settingsTitle" class="card-title">
+        ✨ Thiết lập random
+      </h2>
+
+      <div class="field-grid" id="rangeFields">
+        <div class="field">
+          <label class="field-label" for="start">Từ số</label>
+          <input id="start" type="number" inputmode="numeric" step="1" value="1">
         </div>
-      </section> -->
-      <form id="random-form" novalidate>
-        <p class="section-label">KHOẢNG SỐ</p>
-        <div class="range-grid">
-          <div class="field"><label for="start">Từ số</label>
-            <div class="input-wrap"><input id="start" name="start" type="number" inputmode="numeric" step="1" value="1"
-                required /></div>
-          </div>
-          <div class="field"><label for="end">Đến số</label>
-            <div class="input-wrap"><input id="end" name="end" type="number" inputmode="numeric" step="1" value="100"
-                required /></div>
-          </div>
+
+        <div class="field">
+          <label class="field-label" for="end">Đến số</label>
+          <input id="end" type="number" inputmode="numeric" step="1" value="100">
         </div>
-        <div class="count-section count-row">
-          <div><label for="count" class="section-label">SỐ LƯỢNG</label>
-            <div style="font-size:12px;color:var(--muted)">Có thể trùng số</div>
-          </div>
-          <div class="stepper"><button type="button" id="decrease" aria-label="Giảm số lượng">−</button><input
-              id="count" name="count" type="number" inputmode="numeric" min="1" max="100" step="1" value="1"
-              aria-label="Số lượng số ngẫu nhiên" required /><button type="button" id="increase"
-              aria-label="Tăng số lượng">+</button></div>
+      </div>
+
+      <div class="field count-field" id="countField">
+        <label class="field-label" for="count">
+          Số lượng cần random
+        </label>
+        <input id="count" type="number" inputmode="numeric" min="1" max="100" step="1" value="1">
+      </div>
+
+      <div id="duplicateSection">
+        <div class="mode-heading">Chế độ trùng số</div>
+
+        <div class="duplicate-options" role="radiogroup" aria-label="Chế độ trùng số">
+
+          <label class="option">
+            <input type="radio" name="duplicate" value="allow" checked>
+            <span class="option-content">
+              <strong>🔁 Cho phép trùng</strong>
+              <small>Một số có thể xuất hiện nhiều lần</small>
+            </span>
+          </label>
+
+          <label class="option">
+            <input type="radio" name="duplicate" value="unique">
+            <span class="option-content">
+              <strong>✨ Không trùng số</strong>
+              <small>Mỗi số chỉ xuất hiện một lần</small>
+            </span>
+          </label>
         </div>
-        <button class="generate" id="generate" type="submit"><span aria-hidden="true">✦</span> Random ngay <span
-            aria-hidden="true">✦</span></button>
-        <p class="error" id="error" role="alert" aria-live="polite"></p>
-      </form>
-      <section class="result-panel" aria-label="Kết quả random">
-        <div class="result-heading">KẾT QUẢ CỦA BẠN</div>
-        <p class="placeholder" id="placeholder">Con số may mắn đang đợi bạn ✨</p>
-        <ul class="results" id="results" aria-live="polite" aria-atomic="true"></ul>
-        <div class="result-bottom" id="result-actions" hidden><button class="copy" id="copy" type="button">Sao chép kết
-            quả</button></div>
+
+        <p id="modeHint" class="hint"></p>
+      </div>
+
+      <p class="saved-note">
+        <span aria-hidden="true">✓</span>
+        <span id="saveStatus" role="status">
+          Tự động ghi nhớ những gì em đã thay đổi
+        </span>
+      </p>
+
+      <button id="generate" class="generate-btn" type="button">
+        ✨ Random ngay
+      </button>
+
+      <p id="error" class="error" role="alert"></p>
+    </section>
+
+    <section class="card result-card" id="resultSection" aria-labelledby="resultTitle">
+
+      <h2 id="resultTitle" class="result-label">
+        Kết quả của em ♡
+      </h2>
+
+      <div id="result" class="result-value" aria-live="polite">
+        <span class="placeholder">
+          Nhấn Random để bắt đầu nhé!
+        </span>
+      </div>
+
+      <p id="resultMeta" class="result-meta"></p>
+
+      <button id="copy" class="copy-btn" type="button" disabled>
+        Sao chép kết quả
+      </button>
+    </section>
+
+    <!--
+      BẢNG CHỌN MÀU - TẠM THỜI ẨN.
+
+      <section class="card" id="paletteSection">
+        <h2 class="card-title">🎨 Màu sắc yêu thích</h2>
+        <div id="palette" class="palette">
+          ...
+        </div>
       </section>
-      <p class="footer">Made with <strong>♥</strong> for Bảo Uyên</p>
-    </main>
-  </div>
+    -->
+
+    <footer>
+      Made with ♡ by Ngọc Tiến · For Bảo Uyên
+    </footer>
+  </main>
+
+  <!-- INTERACTIVE TOUR -->
+  <div id="tourOverlay" class="tour-overlay" hidden></div>
+
+  <div id="tourSpotlight" class="tour-spotlight" aria-hidden="true" hidden></div>
+
+  <section id="tourPanel" class="tour-panel" role="dialog" aria-modal="true" aria-labelledby="tourTitle"
+    aria-describedby="tourDescription" tabindex="-1" hidden>
+    <div class="tour-top">
+      <span id="tourCounter" class="tour-counter"></span>
+      <button id="tourSkip" class="tour-skip" type="button">
+        Bỏ qua
+      </button>
+    </div>
+
+    <div id="tourProgress" class="tour-progress" aria-hidden="true"></div>
+
+    <div id="tourWelcomeIcon" class="tour-welcome" aria-hidden="true"></div>
+
+    <h2 id="tourTitle" class="tour-title"></h2>
+    <p id="tourDescription" class="tour-description"></p>
+
+    <div class="tour-actions">
+      <button id="tourBack" class="tour-back" type="button">
+        Quay lại
+      </button>
+
+      <button id="tourNext" class="tour-next" type="button">
+        Tiếp tục
+      </button>
+    </div>
+  </section>
+
   <script>
     'use strict';
-    const form = document.querySelector('#random-form');
-    const startInput = document.querySelector('#start');
-    const endInput = document.querySelector('#end');
-    const countInput = document.querySelector('#count');
-    const error = document.querySelector('#error');
-    const results = document.querySelector('#results');
-    const placeholder = document.querySelector('#placeholder');
-    const resultActions = document.querySelector('#result-actions');
-    const copyButton = document.querySelector('#copy');
-    let lastValues = [];
+
+    const $ = id => document.getElementById(id);
+
+    const startInput = $('start');
+    const endInput = $('end');
+    const countInput = $('count');
+    const resultOutput = $('result');
+    const errorOutput = $('error');
+    const resultMeta = $('resultMeta');
+    const generateButton = $('generate');
+    const copyButton = $('copy');
+    const themeToggle = $('themeToggle');
+    const modeHint = $('modeHint');
+    const saveStatus = $('saveStatus');
 
     const root = document.documentElement;
-    const modeButton = document.querySelector('#mode-toggle');
-    const modeLabel = document.querySelector('#mode-label');
-    const paletteButtons = Array.from(document.querySelectorAll('[data-palette]'));
-    const paletteNames = ['rose', 'peach', 'lilac', 'mint', 'blue'];
-    const storageGet = key => { try { return localStorage.getItem(key); } catch { return null; } };
-    const storageSet = (key, value) => { try { localStorage.setItem(key, value); } catch { } };
-    const systemDark = window.matchMedia('(prefers-color-scheme: dark)');
-    let selectedMode = storageGet('bu-mode');
-    if (!['light', 'dark'].includes(selectedMode)) selectedMode = systemDark.matches ? 'dark' : 'light';
-    let selectedColor = storageGet('bu-palette');
-    if (!paletteNames.includes(selectedColor)) selectedColor = 'rose';
 
-    function applyAppearance() {
-      root.dataset.mode = selectedMode;
-      root.dataset.color = selectedColor;
-      const isDark = selectedMode === 'dark';
-      modeLabel.textContent = isDark ? 'Chế độ sáng' : 'Chế độ tối';
-      modeButton.setAttribute('aria-label', isDark ? 'Chuyển sang giao diện sáng' : 'Chuyển sang giao diện tối');
-      modeButton.setAttribute('aria-pressed', String(isDark));
-      paletteButtons.forEach(btn => btn.setAttribute('aria-pressed', String(btn.dataset.palette === selectedColor)));
-      const bg = getComputedStyle(root).getPropertyValue('--bg').trim();
-      document.querySelector('#theme-color').setAttribute('content', bg);
+    let currentValues = [];
+    let saveStatusTimer;
+
+    // ==========================================
+    // LOCAL STORAGE
+    // ==========================================
+
+    const STORAGE = {
+      start: 'bu-start',
+      end: 'bu-end',
+      count: 'bu-count',
+      duplicate: 'bu-duplicate',
+      theme: 'bu-theme'
+    };
+
+    function getSaved(key, fallback) {
+      try {
+        return localStorage.getItem(key) ?? fallback;
+      } catch {
+        return fallback;
+      }
     }
-    modeButton.addEventListener('click', () => {
-      selectedMode = selectedMode === 'dark' ? 'light' : 'dark';
-      storageSet('bu-mode', selectedMode);
-      applyAppearance();
-    });
-    paletteButtons.forEach(btn => btn.addEventListener('click', () => {
-      selectedColor = btn.dataset.palette;
-      storageSet('bu-palette', selectedColor);
-      applyAppearance();
-    }));
-    systemDark.addEventListener?.('change', event => {
-      if (storageGet('bu-mode') !== null) return;
-      selectedMode = event.matches ? 'dark' : 'light';
-      applyAppearance();
-    });
-    applyAppearance();
 
-    function secureRandomInt(min, max) {
-      // Rejection sampling avoids modulo bias for integer ranges up to 2^32.
-      const range = max - min + 1;
-      if (range > 0x100000000 || range < 1) throw new Error('Khoảng số quá lớn. Vui lòng chọn khoảng tối đa 4.294.967.296 số.');
-      const size = 0x100000000;
-      const limit = Math.floor(size / range) * range;
+    function save(key, value) {
+      try {
+        localStorage.setItem(key, String(value));
+        return true;
+      } catch {
+        return false;
+      }
+    }
+
+    function showSavedStatus(success = true) {
+      clearTimeout(saveStatusTimer);
+
+      saveStatus.textContent = success
+        ? '✓ Đã lưu cài đặt'
+        : 'Không thể lưu trên trình duyệt này';
+
+      saveStatusTimer = setTimeout(() => {
+        saveStatus.textContent =
+          'Cài đặt được tự động ghi nhớ';
+      }, 1800);
+    }
+
+    // ==========================================
+    // KHÔI PHỤC CÀI ĐẶT
+    // ==========================================
+
+    function restoreSettings() {
+      const savedStart = getSaved(STORAGE.start, '1');
+      const savedEnd = getSaved(STORAGE.end, '100');
+      const savedCount = getSaved(STORAGE.count, '1');
+
+      function validInteger(value, fallback) {
+        const number = Number(value);
+
+        return value.trim() !== '' &&
+          Number.isSafeInteger(number)
+          ? value
+          : fallback;
+      }
+
+      startInput.value = validInteger(savedStart, '1');
+      endInput.value = validInteger(savedEnd, '100');
+
+      const parsedCount = Number(savedCount);
+
+      countInput.value =
+        Number.isSafeInteger(parsedCount) &&
+          parsedCount >= 1 &&
+          parsedCount <= 100
+          ? savedCount
+          : '1';
+
+      const savedMode = getSaved(
+        STORAGE.duplicate,
+        'allow'
+      );
+
+      const mode = savedMode === 'unique'
+        ? 'unique'
+        : 'allow';
+
+      document.querySelector(
+        `input[name="duplicate"][value="${mode}"]`
+      ).checked = true;
+    }
+
+    function saveNumberSettings() {
+      const a = save(STORAGE.start, startInput.value);
+      const b = save(STORAGE.end, endInput.value);
+      const c = save(STORAGE.count, countInput.value);
+
+      showSavedStatus(a && b && c);
+    }
+
+    [startInput, endInput, countInput].forEach(input => {
+      input.addEventListener('input', saveNumberSettings);
+      input.addEventListener('change', saveNumberSettings);
+    });
+
+    restoreSettings();
+
+    // ==========================================
+    // DARK MODE
+    // ==========================================
+
+    function setTheme(dark, persist = true) {
+      document.body.classList.toggle('dark', dark);
+
+      themeToggle.textContent = dark ? '☀' : '☾';
+
+      themeToggle.setAttribute(
+        'aria-label',
+        dark ? 'Bật chế độ sáng' : 'Bật chế độ tối'
+      );
+
+      themeToggle.title = dark
+        ? 'Chế độ sáng'
+        : 'Chế độ tối';
+
+      root.style.colorScheme = dark ? 'dark' : 'light';
+
+      const themeColor = document.querySelector(
+        'meta[name="theme-color"]'
+      );
+
+      if (themeColor) {
+        themeColor.content = dark
+          ? '#17121a'
+          : '#fff0f6';
+      }
+
+      if (persist) {
+        showSavedStatus(save(
+          STORAGE.theme,
+          dark ? 'dark' : 'light'
+        ));
+      }
+    }
+
+    const savedTheme = getSaved(STORAGE.theme, 'system');
+
+    const systemDark = window.matchMedia(
+      '(prefers-color-scheme: dark)'
+    ).matches;
+
+    setTheme(
+      savedTheme === 'system'
+        ? systemDark
+        : savedTheme === 'dark',
+      false
+    );
+
+    themeToggle.addEventListener('click', () => {
+      setTheme(
+        !document.body.classList.contains('dark')
+      );
+    });
+
+    // ==========================================
+    // BẢNG MÀU - TẠM THỜI COMMENT
+    // ==========================================
+
+    /*
+    const colors = {
+      pink:   { hex: '#ed5b99', rgb: '237,91,153', bg: '#fff0f6' },
+      peach:  { hex: '#ed9174', rgb: '237,145,116', bg: '#fff3ee' },
+      purple: { hex: '#a57be8', rgb: '165,123,232', bg: '#f5efff' },
+      mint:   { hex: '#38ae94', rgb: '56,174,148', bg: '#eafaf5' },
+      blue:   { hex: '#5c96e8', rgb: '92,150,232', bg: '#edf4ff' }
+    };
+
+    function setColor(name) {
+      if (!Object.hasOwn(colors, name)) name = 'pink';
+
+      const color = colors[name];
+
+      root.style.setProperty('--accent', color.hex);
+      root.style.setProperty('--accent-rgb', color.rgb);
+      root.style.setProperty('--bg', color.bg);
+
+      save('bu-color', name);
+    }
+    */
+
+    // ==========================================
+    // CHẾ ĐỘ TRÙNG SỐ
+    // ==========================================
+
+    function getDuplicateMode() {
+      return document.querySelector(
+        'input[name="duplicate"]:checked'
+      ).value;
+    }
+
+    function updateMode(persist = true) {
+      const unique = getDuplicateMode() === 'unique';
+
+      modeHint.textContent = unique
+        ? 'Không trùng số: mỗi số chỉ xuất hiện một lần trong kết quả.'
+        : 'Cho phép trùng: các số có thể xuất hiện nhiều lần.';
+
+      errorOutput.textContent = '';
+
+      if (persist) {
+        showSavedStatus(save(
+          STORAGE.duplicate,
+          unique ? 'unique' : 'allow'
+        ));
+      }
+    }
+
+    document.querySelectorAll(
+      'input[name="duplicate"]'
+    ).forEach(radio => {
+      radio.addEventListener('change', () => {
+        updateMode();
+      });
+    });
+
+    updateMode(false);
+
+    // ==========================================
+    // CRYPTO RANDOM
+    // ==========================================
+
+    function randomIndex(maxExclusive) {
+      if (
+        !Number.isSafeInteger(maxExclusive) ||
+        maxExclusive < 1 ||
+        maxExclusive > 4294967296
+      ) {
+        throw new Error('Khoảng random không hợp lệ.');
+      }
+
+      const range = 4294967296;
+      const limit =
+        Math.floor(range / maxExclusive) * maxExclusive;
+
       const buffer = new Uint32Array(1);
-      let sample;
-      do { crypto.getRandomValues(buffer); sample = buffer[0]; } while (sample >= limit);
-      return min + (sample % range);
+      let value;
+
+      do {
+        crypto.getRandomValues(buffer);
+        value = buffer[0];
+      } while (value >= limit);
+
+      return value % maxExclusive;
     }
 
-    function generateRandoms(event) {
-      event.preventDefault();
-      error.textContent = '';
-      const min = startInput.value.trim() === '' ? NaN : Number(startInput.value);
-      const max = endInput.value.trim() === '' ? NaN : Number(endInput.value);
-      const count = countInput.value.trim() === '' ? NaN : Number(countInput.value);
-      if (![min, max].every(Number.isSafeInteger)) { error.textContent = 'Vui lòng nhập số nguyên hợp lệ cho khoảng số.'; return; }
-      if (!Number.isInteger(count) || count < 1 || count > 100) { error.textContent = 'Số lượng phải từ 1 đến 100.'; return; }
-      if (min > max) { error.textContent = 'Số bắt đầu phải nhỏ hơn hoặc bằng số kết thúc.'; return; }
-      if (max - min + 1 > 0x100000000) { error.textContent = 'Khoảng số quá lớn (tối đa 4.294.967.296 giá trị).'; return; }
+    function randomInt(min, max) {
+      return min + randomIndex(max - min + 1);
+    }
+
+    // Partial Fisher-Yates:
+    // Lấy mẫu không hoàn lại, không cần tạo
+    // toàn bộ mảng số trong khoảng.
+
+    function randomUnique(min, max, count) {
+      const size = max - min + 1;
+      const swaps = new Map();
+      const output = [];
+
+      for (let i = 0; i < count; i++) {
+        const j = i + randomIndex(size - i);
+
+        const picked = swaps.has(j)
+          ? swaps.get(j)
+          : j;
+
+        const replacement = swaps.has(i)
+          ? swaps.get(i)
+          : i;
+
+        swaps.set(j, replacement);
+        swaps.delete(i);
+
+        output.push(min + picked);
+      }
+
+      return output;
+    }
+
+    // ==========================================
+    // GENERATE
+    // ==========================================
+
+    function showError(message) {
+      errorOutput.textContent = message;
+    }
+
+    function generateRandoms() {
+      const startText = startInput.value.trim();
+      const endText = endInput.value.trim();
+      const countText = countInput.value.trim();
+
+      errorOutput.textContent = '';
+
+      if (!startText || !endText || !countText) {
+        showError('Vui lòng nhập đầy đủ các ô nhé!');
+        return;
+      }
+
+      const start = Number(startText);
+      const end = Number(endText);
+      const count = Number(countText);
+
+      if (
+        !Number.isSafeInteger(start) ||
+        !Number.isSafeInteger(end)
+      ) {
+        showError(
+          'Số bắt đầu và kết thúc phải là số nguyên hợp lệ.'
+        );
+        return;
+      }
+
+      if (
+        !Number.isSafeInteger(count) ||
+        count < 1 ||
+        count > 100
+      ) {
+        showError(
+          'Số lượng phải là số nguyên từ 1 đến 100.'
+        );
+        return;
+      }
+
+      if (start > end) {
+        showError(
+          'Số bắt đầu phải nhỏ hơn hoặc bằng số kết thúc.'
+        );
+        return;
+      }
+
+      const rangeSize = end - start + 1;
+
+      if (
+        !Number.isSafeInteger(rangeSize) ||
+        rangeSize > 4294967296
+      ) {
+        showError(
+          'Khoảng số quá lớn. Hãy chọn khoảng nhỏ hơn.'
+        );
+        return;
+      }
+
+      const unique = getDuplicateMode() === 'unique';
+
+      if (unique && count > rangeSize) {
+        showError(
+          `Không thể tạo ${count} số khác nhau. ` +
+          `Khoảng hiện tại chỉ có ${rangeSize} số. ` +
+          `Hãy giảm số lượng hoặc bật "Cho phép trùng".`
+        );
+        return;
+      }
+
       try {
-        const values = Array.from({ length: count }, () => secureRandomInt(min, max));
-        lastValues = values;
-        results.replaceChildren();
-        results.classList.toggle('single', values.length === 1);
-        const fragment = document.createDocumentFragment();
-        values.forEach(value => { const li = document.createElement('li'); li.textContent = value.toLocaleString('vi-VN'); fragment.appendChild(li); });
-        results.appendChild(fragment);
-        placeholder.hidden = true;
-        resultActions.hidden = false;
+        const values = unique
+          ? randomUnique(start, end, count)
+          : Array.from(
+            { length: count },
+            () => randomInt(start, end)
+          );
+
+        currentValues = values;
+        resultOutput.replaceChildren();
+
+        values.forEach(value => {
+          const span = document.createElement('span');
+
+          span.className =
+            'number' +
+            (values.length > 1 ? ' multiple' : '');
+
+          span.textContent = String(value);
+          resultOutput.appendChild(span);
+        });
+
+        resultMeta.textContent =
+          `${count} số · ` +
+          (unique ? 'Không trùng' : 'Cho phép trùng');
+
+        copyButton.disabled = false;
         copyButton.textContent = 'Sao chép kết quả';
-        if (navigator.vibrate) navigator.vibrate(15);
-      } catch (e) { error.textContent = e.message || 'Không thể tạo số ngẫu nhiên trên trình duyệt này.'; }
+
+        if (navigator.vibrate) {
+          navigator.vibrate(15);
+        }
+      } catch {
+        showError(
+          'Không thể tạo số ngẫu nhiên trên trình duyệt này.'
+        );
+      }
     }
 
-    form.addEventListener('submit', generateRandoms);
-    document.querySelector('#decrease').addEventListener('click', () => {
-      const value = Number(countInput.value); countInput.value = Math.max(1, Number.isFinite(value) ? value - 1 : 1);
-    });
-    document.querySelector('#increase').addEventListener('click', () => {
-      const value = Number(countInput.value); countInput.value = Math.min(100, Number.isFinite(value) ? value + 1 : 1);
-    });
-    copyButton.addEventListener('click', async () => {
-      if (!lastValues.length) return;
-      const content = lastValues.join(', ');
-      try {
-        if (navigator.clipboard && window.isSecureContext) await navigator.clipboard.writeText(content);
-        else {
-          const input = document.createElement('textarea'); input.value = content; input.style.position = 'fixed'; input.style.opacity = '0'; document.body.append(input); input.select();
-          const success = document.execCommand('copy'); input.remove(); if (!success) throw new Error('Copy failed');
+    generateButton.addEventListener(
+      'click',
+      generateRandoms
+    );
+
+    [startInput, endInput, countInput].forEach(input => {
+      input.addEventListener('keydown', event => {
+        if (
+          event.key === 'Enter' &&
+          !event.repeat
+        ) {
+          event.preventDefault();
+          generateRandoms();
         }
-        copyButton.textContent = 'Đã sao chép ✓';
-      } catch { error.textContent = 'Không sao chép tự động được. Hãy chọn và sao chép kết quả thủ công.'; }
+      });
     });
+
+    // ==========================================
+    // COPY
+    // ==========================================
+
+    copyButton.addEventListener('click', async () => {
+      if (!currentValues.length) return;
+
+      const text = currentValues.join(', ');
+      let success = false;
+
+      try {
+        await navigator.clipboard.writeText(text);
+        success = true;
+      } catch {
+        const textarea = document.createElement('textarea');
+
+        textarea.value = text;
+        textarea.style.position = 'fixed';
+        textarea.style.opacity = '0';
+
+        document.body.appendChild(textarea);
+        textarea.select();
+
+        success = document.execCommand('copy');
+        textarea.remove();
+      }
+
+      copyButton.textContent = success
+        ? '✓ Đã sao chép!'
+        : 'Không thể sao chép';
+
+      setTimeout(() => {
+        copyButton.textContent = 'Sao chép kết quả';
+      }, 1800);
+    });
+
+    // ==========================================
+    // INTERACTIVE STEP-BY-STEP TOUR
+    // ==========================================
+
+    const tourOverlay = $('tourOverlay');
+    const tourSpotlight = $('tourSpotlight');
+    const tourPanel = $('tourPanel');
+    const tourTitle = $('tourTitle');
+    const tourDescription = $('tourDescription');
+    const tourCounter = $('tourCounter');
+    const tourProgress = $('tourProgress');
+    const tourNext = $('tourNext');
+    const tourBack = $('tourBack');
+    const tourSkip = $('tourSkip');
+    const tourWelcomeIcon = $('tourWelcomeIcon');
+
+    const TOUR_VERSION = 'v2';
+    const TOUR_KEY = 'bu-interactive-tour-' + TOUR_VERSION;
+
+    const tourSteps = [
+      {
+        target: null,
+        icon: '💗',
+        title: 'Chào Bảo Uyên iu!',
+        description:
+          'Anh vừa nâng cấp trang random cho em nè! ' +
+          'Anh sẽ chỉ em từng chỗ một, ' +
+          'chỉ cần nhấn <strong>Tiếp tục</strong> nhé.'
+      },
+      {
+        target: '#rangeFields',
+        title: '① Chọn khoảng số',
+        description:
+          'Đây là nơi em nhập <strong>số bắt đầu</strong> ' +
+          'và <strong>số kết thúc</strong>. ' +
+          'Ví dụ: từ 1 đến 100 thì kết quả sẽ nằm trong khoảng này.'
+      },
+      {
+        target: '#countField',
+        title: '② Chọn số lượng',
+        description:
+          'Em muốn random bao nhiêu số thì nhập vào đây. ' +
+          'Ví dụ nhập <strong>5</strong> sẽ nhận được 5 số. ' +
+          'Có thể tạo tối đa <strong>100 số</strong> mỗi lần.'
+      },
+      {
+        target: '#duplicateSection',
+        title: '③ Cho phép trùng hay không?',
+        description:
+          'Chọn <strong>Cho phép trùng</strong> nếu em muốn ' +
+          'một số có thể xuất hiện nhiều lần. ' +
+          'Chọn <strong>Không trùng số</strong> nếu mỗi số ' +
+          'chỉ được xuất hiện một lần trong kết quả.'
+      },
+      {
+        target: '#generate',
+        title: '④ Nhấn để random!',
+        description:
+          'Sau khi thiết lập xong, em chỉ cần nhấn ' +
+          '<strong>Random ngay</strong> để tạo kết quả. ' +
+          'Em có thể nhấn nhiều lần để random lại.'
+      },
+      {
+        target: '#resultSection',
+        title: '⑤ Xem và sao chép kết quả',
+        description:
+          'Kết quả sẽ xuất hiện ở đây. ' +
+          'Nhấn <strong>Sao chép kết quả</strong> để ' +
+          'copy toàn bộ các số vừa tạo.'
+      },
+      {
+        target: '#themeToggle',
+        title: '⑥ Chuyển Dark Mode',
+        description:
+          'Chạm vào biểu tượng <strong>mặt trăng</strong> ' +
+          'để bật chế độ tối. ' +
+          'Chạm vào <strong>mặt trời</strong> để trở về chế độ sáng.'
+      },
+      {
+        target: '#saveStatus',
+        title: '⑦ Tự động ghi nhớ cài đặt',
+        description:
+          'Em không cần nhấn nút lưu đâu! ' +
+          'Khoảng số, số lượng, chế độ trùng số ' +
+          'và giao diện sáng/tối sẽ được ' +
+          '<strong>tự động lưu trên trình duyệt này</strong>. ' +
+          'Lần sau mở lại, cài đặt vẫn được giữ nguyên.'
+      },
+      {
+        target: '#helpButton',
+        title: '⑧ Muốn xem lại hướng dẫn?',
+        description:
+          'Chỉ cần nhấn nút <strong>?</strong> ở góc trên ' +
+          'để xem lại hướng dẫn bất cứ lúc nào. ' +
+          'Giờ thì em có thể bắt đầu rồi! 💗'
+      }
+    ];
+
+    let tourIndex = 0;
+    let tourActive = false;
+    let tourPreviousFocus = null;
+    let tourLayoutFrame = 0;
+    let tourScrollTimer = 0;
+
+    function positionTour() {
+      if (!tourActive) return;
+
+      const step = tourSteps[tourIndex];
+      const target = step.target
+        ? document.querySelector(step.target)
+        : null;
+
+      const viewportWidth = window.innerWidth;
+      const viewportHeight = window.innerHeight;
+
+      const safeTop = 16;
+      const safeBottom = 20;
+      const gap = 18;
+
+      tourPanel.style.left = '50%';
+      tourPanel.style.right = 'auto';
+      tourPanel.style.transform = 'translateX(-50%)';
+
+      if (!target) {
+        tourSpotlight.hidden = true;
+
+        const panelHeight = tourPanel.offsetHeight;
+
+        tourPanel.style.top =
+          Math.max(
+            safeTop,
+            (viewportHeight - panelHeight) / 2
+          ) + 'px';
+
+        return;
+      }
+
+      const rect = target.getBoundingClientRect();
+      const padding = 7;
+
+      const left = Math.max(5, rect.left - padding);
+      const top = Math.max(5, rect.top - padding);
+
+      const right = Math.min(
+        viewportWidth - 5,
+        rect.right + padding
+      );
+
+      const bottom = Math.min(
+        viewportHeight - 5,
+        rect.bottom + padding
+      );
+
+      tourSpotlight.hidden = false;
+      tourSpotlight.style.left = left + 'px';
+      tourSpotlight.style.top = top + 'px';
+      tourSpotlight.style.width =
+        Math.max(0, right - left) + 'px';
+      tourSpotlight.style.height =
+        Math.max(0, bottom - top) + 'px';
+
+      const panelHeight = tourPanel.offsetHeight;
+
+      const spaceBelow = viewportHeight - bottom - safeBottom;
+      const spaceAbove = top - safeTop;
+
+      let panelTop;
+
+      if (spaceBelow >= panelHeight + gap) {
+        panelTop = bottom + gap;
+      } else if (spaceAbove >= panelHeight + gap) {
+        panelTop = top - panelHeight - gap;
+      } else {
+        // Với màn hình thấp hoặc bàn phím đang mở,
+        // ưu tiên đặt bảng hướng dẫn ở vùng còn trống.
+        const belowTop = Math.max(
+          safeTop,
+          viewportHeight - panelHeight - safeBottom
+        );
+
+        const aboveTop = safeTop;
+
+        panelTop = spaceBelow >= spaceAbove
+          ? belowTop
+          : aboveTop;
+      }
+
+      panelTop = Math.max(
+        safeTop,
+        Math.min(
+          panelTop,
+          viewportHeight - panelHeight - safeBottom
+        )
+      );
+
+      tourPanel.style.top = panelTop + 'px';
+    }
+
+    function scheduleTourPosition() {
+      cancelAnimationFrame(tourLayoutFrame);
+
+      tourLayoutFrame = requestAnimationFrame(() => {
+        positionTour();
+      });
+    }
+
+    function renderTour() {
+      const step = tourSteps[tourIndex];
+
+      tourCounter.textContent =
+        `Bước ${tourIndex + 1}/${tourSteps.length}`;
+
+      tourTitle.textContent = step.title;
+      tourDescription.innerHTML = step.description;
+
+      tourWelcomeIcon.textContent = step.icon || '';
+      tourWelcomeIcon.hidden = !step.icon;
+
+      tourBack.hidden = tourIndex === 0;
+
+      tourNext.textContent =
+        tourIndex === tourSteps.length - 1
+          ? 'Hoàn tất ♡'
+          : tourIndex === 0
+            ? 'Bắt đầu hướng dẫn'
+            : 'Tiếp tục';
+
+      tourProgress.replaceChildren();
+
+      tourSteps.forEach((_, index) => {
+        const segment = document.createElement('span');
+
+        if (index <= tourIndex) {
+          segment.classList.add('active');
+        }
+
+        tourProgress.appendChild(segment);
+      });
+
+      const target = step.target
+        ? document.querySelector(step.target)
+        : null;
+
+      tourSpotlight.hidden = !target;
+
+      if (target) {
+        // Cuộn để phần đang được giới thiệu nằm trong
+        // vùng nhìn thấy trên iPhone.
+        target.scrollIntoView({
+          behavior: window.matchMedia(
+            '(prefers-reduced-motion: reduce)'
+          ).matches ? 'instant' : 'smooth',
+          block: 'center',
+          inline: 'nearest'
+        });
+      }
+
+      // Đặt panel ngay, sau đó cập nhật lại khi
+      // hiệu ứng cuộn hoàn tất.
+      scheduleTourPosition();
+
+      clearTimeout(tourScrollTimer);
+
+      tourScrollTimer = setTimeout(() => {
+        scheduleTourPosition();
+      }, 400);
+
+      tourNext.focus({ preventScroll: true });
+    }
+
+    function startTour() {
+      if (tourActive) return;
+
+      tourPreviousFocus = document.activeElement;
+      tourIndex = 0;
+      tourActive = true;
+
+      tourOverlay.hidden = false;
+      tourPanel.hidden = false;
+
+      // Không khóa cuộn trang vì spotlight cần
+      // di chuyển đến các phần ở bên dưới.
+      renderTour();
+    }
+
+    function endTour(completed = false) {
+      if (!tourActive) return;
+
+      tourActive = false;
+
+      clearTimeout(tourScrollTimer);
+      cancelAnimationFrame(tourLayoutFrame);
+
+      tourOverlay.hidden = true;
+      tourPanel.hidden = true;
+      tourSpotlight.hidden = true;
+
+      // Ghi nhớ khi đã hoàn tất hoặc chủ động bỏ qua.
+      save(TOUR_KEY, completed ? 'completed' : 'skipped');
+
+      if (
+        tourPreviousFocus &&
+        typeof tourPreviousFocus.focus === 'function'
+      ) {
+        tourPreviousFocus.focus({ preventScroll: true });
+      }
+
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
+
+    tourNext.addEventListener('click', () => {
+      if (tourIndex >= tourSteps.length - 1) {
+        endTour(true);
+        return;
+      }
+
+      tourIndex++;
+      renderTour();
+    });
+
+    tourBack.addEventListener('click', () => {
+      if (tourIndex <= 0) return;
+
+      tourIndex--;
+      renderTour();
+    });
+
+    tourSkip.addEventListener('click', () => {
+      endTour(false);
+    });
+
+    $('helpButton').addEventListener('click', startTour);
+
+    // Giữ focus trong bảng hướng dẫn.
+    tourPanel.addEventListener('keydown', event => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        endTour(false);
+        return;
+      }
+
+      if (event.key !== 'Tab') return;
+
+      const focusables = [
+        tourSkip,
+        ...(!tourBack.hidden ? [tourBack] : []),
+        tourNext
+      ];
+
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (
+        !event.shiftKey &&
+        document.activeElement === last
+      ) {
+        event.preventDefault();
+        first.focus();
+      }
+    });
+
+    window.addEventListener(
+      'resize',
+      scheduleTourPosition,
+      { passive: true }
+    );
+
+    window.addEventListener(
+      'scroll',
+      scheduleTourPosition,
+      { passive: true }
+    );
+
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener(
+        'resize',
+        scheduleTourPosition,
+        { passive: true }
+      );
+    }
+
+    // Tự động mở hướng dẫn ở lần truy cập đầu tiên.
+    // Đổi TOUR_VERSION khi muốn giới thiệu
+    // một phiên bản tính năng mới.
+
+    if (!getSaved(TOUR_KEY, '')) {
+      window.addEventListener('load', () => {
+        startTour();
+      }, { once: true });
+    }
   </script>
 </body>
 
