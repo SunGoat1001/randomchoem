@@ -1,224 +1,996 @@
 <!doctype html>
-<html lang="en">
+<html lang="vi">
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Random Number Generator</title>
-
-  <!-- meta tags -->
-  <meta name="title" content="Random Number cho riêng BU">
-  <meta name="description"
-    content="Chắc là sẽ random số có vẻ ngẫu nhiên và nhanh chóng, anh Ngọc Tiến làm cho em Bảo Uyên.">
-  <meta name="keywords" content="ngtien, bu, tien, uyen, bao uyen, nguyen le bao uyen, le pham ngoc tien">
-  <meta name="robots" content="index, follow">
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta name="language" content="English">
-  <meta name="author" content="Le Pham Ngoc Tien / Leonardo Le Pham">
-
-  <!-- meta tags for social media -->
-  <meta property="og:title" content="Random number cho riêng BU" />
-  <meta property="og:url" content="/" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" id="theme-color" content="#fff5f9" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="title" content="Random Number cho riêng BU" />
+  <meta name="description" content="Random số nhanh chóng, dễ thương, dành riêng cho Bảo Uyên." />
+  <meta name="author" content="Le Pham Ngoc Tien / Leonardo Le Pham" />
+  <meta property="og:title" content="Random Number cho riêng BU" />
+  <meta property="og:description" content="Một chiếc random số nho nhỏ dành cho Bảo Uyên." />
   <meta property="og:image" content="/banner.avif" />
-
-  <meta name="twitter:title" content="Random number cho riêng BU">
-  <meta name="twitter:description"
-    content="Chắc là sẽ random số có vẻ ngẫu nhiên và nhanh chóng, anh Ngọc Tiến làm cho em Bảo Uyên.">
-  <meta name="twitter:image" content="/banner.avif">
-  <meta name="twitter:card" content="Random number cho riêng BU">
-
-
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Random Number cho riêng BU" />
+  <meta name="twitter:description" content="Một chiếc random số nho nhỏ dành cho Bảo Uyên." />
+  <meta name="twitter:image" content="/banner.avif" />
+  <title>Random Number · Cho Bảo Uyên</title>
   <style>
     :root {
-      color-scheme: light dark;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      color-scheme: light;
+      --bg: #fff5f9;
+      --surface: #fff;
+      --surface-muted: #fff6fa;
+      --text: #35202c;
+      --muted: #8e7481;
+      --border: #f4dce7;
+      --primary: #d84283;
+      --primary-hover: #bb2d6c;
+      --primary-soft: #ffe7f1;
+      --accent: #fa9bc0;
+      --shadow: 0 24px 65px rgba(167, 54, 107, .11);
+      --error: #b4234b;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    html {
+      min-height: 100%;
+      -webkit-text-size-adjust: 100%
     }
 
     body {
-      margin: 0;
       min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: #f3f4f6;
-      color: #111827;
+      min-height: 100svh;
+      margin: 0;
+      color: var(--text);
+      background: radial-gradient(ellipse 75% 38% at 5% -5%, var(--glow1, #ffd7e9) 0%, transparent 85%),
+        radial-gradient(ellipse 80% 45% at 105% 100%, var(--glow2, #ffe1ed) 0%, transparent 85%), var(--bg);
     }
 
-    .app {
-      width: min(92vw, 420px);
-      background: #ffffff;
-      border-radius: 14px;
-      padding: 1rem;
-      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.1);
-    }
-
-    h1 {
-      margin: 0 0 0.75rem;
-      font-size: 1.25rem;
-    }
-
-    .field {
-      margin-bottom: 0.75rem;
-    }
-
-    label {
-      display: block;
-      margin-bottom: 0.25rem;
-      font-size: 0.95rem;
-    }
-
+    button,
     input {
-      width: 100%;
-      box-sizing: border-box;
-      border: 1px solid #d1d5db;
-      border-radius: 10px;
-      padding: 0.7rem;
-      font-size: 1rem;
+      font: inherit
     }
 
     button {
-      width: 100%;
-      border: 0;
-      border-radius: 10px;
-      background: #2563eb;
-      color: #fff;
-      padding: 0.75rem;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: transform 160ms ease, background-color 160ms ease, box-shadow 160ms ease;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation
     }
 
-    button:hover {
-      background: #1d4ed8;
-      transform: translateY(-1px);
-      box-shadow: 0 10px 18px rgba(37, 99, 235, 0.24);
+    .page {
+      min-height: 100vh;
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: max(28px, env(safe-area-inset-top)) max(18px, env(safe-area-inset-right)) max(32px, env(safe-area-inset-bottom)) max(18px, env(safe-area-inset-left));
+    }
+
+    .app {
+      width: min(100%, 460px);
+      padding: clamp(23px, 5.5vw, 38px);
+      background: var(--surface);
+      border: 1px solid rgba(255, 255, 255, .72);
+      border-radius: 32px;
+      box-shadow: var(--shadow);
+    }
+
+    .topline {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px
+    }
+
+    .eyebrow {
+      margin: 0;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .14em;
+      color: var(--primary)
+    }
+
+    .heart {
+      display: grid;
+      place-items: center;
+      width: 39px;
+      height: 39px;
+      border-radius: 14px;
+      color: #d3558b;
+      background: #ffedf4;
+      font-size: 21px
+    }
+
+    h1 {
+      margin: 13px 0 8px;
+      font-weight: 800;
+      font-size: clamp(28px, 7.2vw, 37px);
+      line-height: 1.13;
+      letter-spacing: -.05em
+    }
+
+    h1 span {
+      color: var(--primary)
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.55;
+      margin: 0 0 27px
+    }
+
+    .section-label {
+      display: block;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .035em;
+      margin: 0 0 12px
+    }
+
+    .range-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 12px
+    }
+
+    .field label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 650;
+      font-size: 13px;
+      color: var(--muted)
+    }
+
+    .input-wrap {
+      position: relative
+    }
+
+    .input-wrap input {
+      display: block;
+      width: 100%;
+      min-width: 0;
+      height: 58px;
+      padding: 0 15px;
+      border: 1.5px solid var(--border);
+      border-radius: 17px;
+      outline: 0;
+      background: var(--surface-muted);
+      color: var(--text);
+      font-size: 18px;
+      font-weight: 750;
+      font-variant-numeric: tabular-nums;
+      transition: border-color .15s, box-shadow .15s
+    }
+
+    input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(128, 97, 232, .12)
+    }
+
+    input::-webkit-inner-spin-button,
+    input::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0
+    }
+
+    input[type=number] {
+      -moz-appearance: textfield;
+      appearance: textfield
+    }
+
+    .count-section {
+      margin-top: 23px
+    }
+
+    .count-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px
+    }
+
+    .stepper {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 5px;
+      background: var(--surface-muted);
+      border: 1px solid var(--border);
+      border-radius: 18px
+    }
+
+    .stepper button {
+      width: 45px;
+      height: 45px;
+      border: 0;
+      border-radius: 13px;
+      color: var(--primary);
+      background: var(--surface);
+      font-size: 25px;
+      font-weight: 500;
+      cursor: pointer
+    }
+
+    .stepper button:active {
+      transform: scale(.95)
+    }
+
+    .stepper input {
+      width: 49px;
+      height: 45px;
+      padding: 0;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      box-shadow: none;
+      text-align: center;
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--text);
+      font-variant-numeric: tabular-nums
+    }
+
+    .generate {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      min-height: 60px;
+      margin-top: 26px;
+      padding: 13px 16px;
+      border: none;
+      border-radius: 19px;
+      background: linear-gradient(110deg, #9676f3 0%, #7657dc 100%);
+      color: white;
+      font-size: 16px;
+      font-weight: 800;
+      box-shadow: 0 12px 23px rgba(113, 78, 217, .24);
+      cursor: pointer;
+      transition: transform .15s, filter .15s
+    }
+
+    .generate:hover {
+      filter: brightness(1.035)
+    }
+
+    .generate:active {
+      transform: scale(.985)
     }
 
     button:focus-visible {
-      outline: 3px solid rgba(37, 99, 235, 0.35);
-      outline-offset: 3px;
-      background: #1d4ed8;
+      outline: 3px solid var(--accent);
+      outline-offset: 3px
     }
 
-    #error {
-      color: #b91c1c;
-      min-height: 1.4rem;
-      margin: 0.75rem 0 0;
+    .result-panel {
+      margin-top: 22px;
+      padding: 19px 18px 20px;
+      min-height: 151px;
+      border: 1px solid #ebe4fc;
+      border-radius: 23px;
+      background: linear-gradient(145deg, #faf7ff, #f5f0ff);
+      text-align: center
     }
 
-    #result {
-      margin: 0.25rem 0 0;
-      word-break: break-word;
-      font-size: 1rem;
+    .result-heading {
+      color: #78679c;
+      font-size: 12px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      font-weight: 800
     }
 
-    @media (prefers-color-scheme: dark) {
-      body {
-        background: #111827;
-        color: #f3f4f6;
+    .placeholder {
+      margin-top: 24px;
+      color: #a49ab7;
+      font-size: 14px;
+      line-height: 1.4
+    }
+
+    .results {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      margin: 19px 0 0;
+      padding: 0;
+      list-style: none;
+      max-height: 220px;
+      overflow: auto;
+      -webkit-overflow-scrolling: touch
+    }
+
+    .results li {
+      min-width: 54px;
+      max-width: 100%;
+      padding: 8px 13px;
+      border-radius: 13px;
+      background: #fff;
+      color: #6747ce;
+      font-size: 22px;
+      font-weight: 850;
+      font-variant-numeric: tabular-nums;
+      overflow-wrap: anywhere;
+      animation: pop .22s ease both
+    }
+
+    .results.single li {
+      background: transparent;
+      padding: 0;
+      font-size: clamp(50px, 16vw, 76px);
+      letter-spacing: -.055em;
+      line-height: 1.2
+    }
+
+    .result-bottom {
+      display: flex;
+      justify-content: center;
+      margin-top: 14px
+    }
+
+    .copy {
+      border: 0;
+      border-radius: 10px;
+      padding: 9px 13px;
+      background: #ebe3ff;
+      color: #694ec2;
+      font-size: 12px;
+      font-weight: 750;
+      cursor: pointer
+    }
+
+    .error {
+      min-height: 0;
+      margin: 11px 0 0;
+      color: var(--error);
+      font-size: 13px;
+      line-height: 1.45;
+      font-weight: 600
+    }
+
+    .error:empty {
+      display: none
+    }
+
+    .footer {
+      text-align: center;
+      margin: 22px 0 0;
+      color: var(--muted);
+      font-size: 12px
+    }
+
+    .footer strong {
+      color: #a061af
+    }
+
+    [hidden] {
+      display: none !important
+    }
+
+    @keyframes pop {
+      from {
+        opacity: .5;
+        transform: translateY(7px) scale(.95)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1)
+      }
+    }
+
+    @media (max-width: 480px) {
+      .page {
+        align-items: flex-start;
+        padding-top: max(24px, calc(env(safe-area-inset-top) + 16px));
+        padding-bottom: max(24px, calc(env(safe-area-inset-bottom) + 16px))
       }
 
       .app {
-        background: #1f2937;
-        box-shadow: none;
+        border-radius: 27px;
+        padding: 25px 22px
+      }
+    }
+
+    @media (max-width: 350px) {
+      .app {
+        padding: 20px 16px
       }
 
-      input {
-        border-color: #4b5563;
-        background: #111827;
-        color: #f3f4f6;
+      .stepper button {
+        width: 39px
       }
 
-      button:hover {
-        box-shadow: 0 10px 18px rgba(59, 130, 246, 0.22);
+      .stepper input {
+        width: 36px
+      }
+    }
+
+    /* Color palettes share the same components; light/dark is a separate setting. */
+    :root {
+      --glow1: #ffd7e9;
+      --glow2: #ffe1ed;
+      --primary-strong: #c52e70;
+      --panel: #fff0f6;
+      --chip: #ffffff;
+      --on-primary: #ffffff;
+      --focus-ring: rgba(216, 66, 131, .19)
+    }
+
+    :root[data-color="peach"] {
+      --bg: #fff8f3;
+      --surface-muted: #fff7f1;
+      --border: #f3ded1;
+      --primary: #cf684a;
+      --primary-hover: #b35439;
+      --primary-strong: #b65337;
+      --primary-soft: #fff0e8;
+      --accent: #f6ae91;
+      --glow1: #ffe2d4;
+      --glow2: #ffeddf;
+      --panel: #fff2ea;
+      --focus-ring: rgba(207, 104, 74, .19)
+    }
+
+    :root[data-color="lilac"] {
+      --bg: #faf6ff;
+      --surface-muted: #f8f2ff;
+      --border: #eadef3;
+      --primary: #8755ca;
+      --primary-hover: #7545b8;
+      --primary-strong: #7844b8;
+      --primary-soft: #f1e9ff;
+      --accent: #bda1e9;
+      --glow1: #eadbff;
+      --glow2: #f7e4f5;
+      --panel: #f5edff;
+      --focus-ring: rgba(135, 85, 202, .19)
+    }
+
+    :root[data-color="mint"] {
+      --bg: #f3fcf8;
+      --surface-muted: #f1fbf6;
+      --border: #d5eae2;
+      --primary: #198b78;
+      --primary-hover: #147663;
+      --primary-strong: #087666;
+      --primary-soft: #dff8f0;
+      --accent: #80d5bc;
+      --glow1: #d6faed;
+      --glow2: #e9f8e8;
+      --panel: #eafaf3;
+      --focus-ring: rgba(25, 139, 120, .19)
+    }
+
+    :root[data-color="blue"] {
+      --bg: #f4f9ff;
+      --surface-muted: #f0f7ff;
+      --border: #d8e6f5;
+      --primary: #347aca;
+      --primary-hover: #2465b1;
+      --primary-strong: #2468b5;
+      --primary-soft: #e5f1ff;
+      --accent: #95c3fb;
+      --glow1: #daeaff;
+      --glow2: #e8f1ff;
+      --panel: #edf5ff;
+      --focus-ring: rgba(52, 122, 202, .19)
+    }
+
+    :root[data-mode="dark"] {
+      color-scheme: dark;
+      --bg: #19131a;
+      --surface: #281e28;
+      --surface-muted: #332631;
+      --text: #fff0f6;
+      --muted: #cdb4c2;
+      --border: #503a48;
+      --shadow: 0 24px 65px rgba(0, 0, 0, .28);
+      --error: #ffabc4;
+      --panel: #362531;
+      --chip: #483344;
+      --on-primary: #fff;
+      --glow1: #3f1e32;
+      --glow2: #382332
+    }
+
+    :root[data-mode="dark"][data-color="peach"] {
+      --bg: #1d1715;
+      --surface: #29211e;
+      --surface-muted: #382b26;
+      --text: #fff3eb;
+      --muted: #d4bdb1;
+      --border: #594137;
+      --panel: #3b2b24;
+      --chip: #50382e;
+      --glow1: #483026;
+      --glow2: #36251e
+    }
+
+    :root[data-mode="dark"][data-color="lilac"] {
+      --bg: #17131f;
+      --surface: #231e2e;
+      --surface-muted: #30283d;
+      --text: #f6f0ff;
+      --muted: #c4b6d6;
+      --border: #4c405f;
+      --panel: #322740;
+      --chip: #443555;
+      --glow1: #35244b;
+      --glow2: #302337
+    }
+
+    :root[data-mode="dark"][data-color="mint"] {
+      --bg: #121c1a;
+      --surface: #1c2925;
+      --surface-muted: #283933;
+      --text: #eafff7;
+      --muted: #adcfc3;
+      --border: #395a4d;
+      --panel: #213e35;
+      --chip: #305146;
+      --glow1: #1c4537;
+      --glow2: #20362d
+    }
+
+    :root[data-mode="dark"][data-color="blue"] {
+      --bg: #131a25;
+      --surface: #1d2838;
+      --surface-muted: #29364a;
+      --text: #edf5ff;
+      --muted: #b5c7dd;
+      --border: #3c506c;
+      --panel: #243651;
+      --chip: #324763;
+      --glow1: #213955;
+      --glow2: #252c48
+    }
+
+    :root[data-mode="dark"][data-color="rose"] {
+      --primary: #ff82b6;
+      --primary-hover: #ff9ac5;
+      --primary-strong: #ff9ac5;
+      --primary-soft: #4a2c3c
+    }
+
+    :root[data-mode="dark"][data-color="peach"] {
+      --primary: #ffa786;
+      --primary-hover: #ffbd9e;
+      --primary-strong: #ffbd9e;
+      --primary-soft: #493127
+    }
+
+    :root[data-mode="dark"][data-color="lilac"] {
+      --primary: #c7a6ff;
+      --primary-hover: #d8bfff;
+      --primary-strong: #d8bfff;
+      --primary-soft: #433259
+    }
+
+    :root[data-mode="dark"][data-color="mint"] {
+      --primary: #77dec3;
+      --primary-hover: #a0efd9;
+      --primary-strong: #a0efd9;
+      --primary-soft: #234b40
+    }
+
+    :root[data-mode="dark"][data-color="blue"] {
+      --primary: #91c5ff;
+      --primary-hover: #b0d6ff;
+      --primary-strong: #b0d6ff;
+      --primary-soft: #2c4561
+    }
+
+    .app {
+      border-color: var(--border)
+    }
+
+    .heart {
+      background: var(--primary-soft);
+      color: var(--primary)
+    }
+
+    .eyebrow {
+      font-size: 11px;
+      letter-spacing: .1em
+    }
+
+    .theme-icon {
+      width: 21px;
+      height: 21px;
+      display: block;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.9;
+      stroke-linecap: round;
+      stroke-linejoin: round
+    }
+
+    .mode-toggle {
+      height: 44px;
+      min-width: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--surface-muted);
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      color: var(--text);
+      cursor: pointer;
+      padding: 0 12px
+    }
+
+    .mode-toggle .icon-sun {
+      display: none
+    }
+
+    :root[data-mode="dark"] .mode-toggle .icon-sun {
+      display: block
+    }
+
+    :root[data-mode="dark"] .mode-toggle .icon-moon {
+      display: none
+    }
+
+    .mode-text {
+      font-size: 12px;
+      font-weight: 750
+    }
+
+    .settings {
+      margin: 0 0 23px;
+      padding: 15px;
+      background: var(--surface-muted);
+      border: 1px solid var(--border);
+      border-radius: 20px
+    }
+
+    .settings-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin: 0 0 12px
+    }
+
+    .settings-heading strong {
+      font-size: 13px
+    }
+
+    .settings-heading small {
+      font-size: 11px;
+      color: var(--muted)
+    }
+
+    .palette {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 5px
+    }
+
+    .swatch {
+      border: 2px solid transparent;
+      border-radius: 13px;
+      background: transparent;
+      color: var(--muted);
+      padding: 7px 1px 5px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      font-size: 10px;
+      font-weight: 700;
+      cursor: pointer;
+      min-width: 0
+    }
+
+    .swatch-circle {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: var(--swatch);
+      border: 2px solid rgba(255, 255, 255, .58);
+      box-shadow: 0 1px 5px rgba(0, 0, 0, .12)
+    }
+
+    .swatch[aria-pressed="true"] {
+      border-color: var(--primary);
+      background: var(--primary-soft);
+      color: var(--primary-strong)
+    }
+
+    .swatch[aria-pressed="true"] .swatch-circle::after {
+      content: '✓';
+      font-size: 17px;
+      color: #fff;
+      font-weight: 800;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, .3)
+    }
+
+    .swatch:focus-visible,
+    .mode-toggle:focus-visible {
+      outline: 3px solid var(--accent);
+      outline-offset: 2px
+    }
+
+    .input-wrap input:focus {
+      box-shadow: 0 0 0 4px var(--focus-ring)
+    }
+
+    .generate {
+      background: linear-gradient(115deg, var(--primary), var(--primary-hover));
+      box-shadow: 0 12px 23px var(--focus-ring);
+      color: var(--on-primary)
+    }
+
+    :root[data-mode="dark"] .generate {
+      color: #21151c
+    }
+
+    .result-panel {
+      border-color: var(--border);
+      background: var(--panel)
+    }
+
+    .result-heading {
+      color: var(--primary-strong)
+    }
+
+    .placeholder {
+      color: var(--muted)
+    }
+
+    .results li {
+      background: var(--chip);
+      color: var(--primary-strong)
+    }
+
+    .results.single li {
+      background: transparent
+    }
+
+    .copy {
+      background: var(--primary-soft);
+      color: var(--primary-strong)
+    }
+
+    .footer strong {
+      color: var(--primary)
+    }
+
+    @media(max-width:380px) {
+      .mode-text {
+        display: none
       }
 
-      button:focus-visible {
-        outline-color: rgba(96, 165, 250, 0.5);
+      .mode-toggle {
+        padding: 0;
+        width: 44px
+      }
+
+      .swatch-circle {
+        width: 27px;
+        height: 27px
+      }
+
+      .swatch {
+        font-size: 9px
+      }
+
+      .settings {
+        padding: 10px
+      }
+
+      .app {
+        padding: 23px 17px
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important
       }
     }
   </style>
 </head>
 
 <body>
-  <main class="app">
-    <h1>Random Number cho cục cưng (Bảo Uyên iu)</h1>
-
-    <div class="field">
-      <label for="start">Start</label>
-      <input id="start" type="number" inputmode="numeric" value="1" />
-    </div>
-
-    <div class="field">
-      <label for="end">End</label>
-      <input id="end" type="number" inputmode="numeric" value="100" />
-    </div>
-
-    <div class="field">
-      <label for="count">Number of randoms</label>
-      <input id="count" type="number" inputmode="numeric" min="1" value="1" />
-    </div>
-
-    <button id="generate" type="button">Generate</button>
-    <p id="error" aria-live="polite"></p>
-    <p id="result" aria-live="polite"></p>
-  </main>
-
+  <div class="page">
+    <main class="app">
+      <div class="topline">
+        <p class="eyebrow">A little something for BU ♡</p>
+        <button type="button" class="mode-toggle" id="mode-toggle" aria-label="Chuyển sang giao diện tối"
+          aria-pressed="false" title="Chuyển sáng / tối">
+          <svg class="theme-icon icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5a8.5 8.5 0 1 0 10.7 10.7Z" />
+          </svg>
+          <svg class="theme-icon icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="4" />
+            <path
+              d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42" />
+          </svg>
+          <span class="mode-text" id="mode-label">Chế độ tối</span>
+        </button>
+      </div>
+      <h1>Random số<br />cho <span>cục cưng Bảo Uyên.</span></h1>
+      <p class="subtitle">Một chút ngẫu nhiên, một chút đáng yêu. Chọn khoảng số rồi để may mắn quyết định nhé!</p>
+      <!-- <section class="settings" aria-label="Tùy chỉnh màu giao diện">
+        <div class="settings-heading"><strong>Chọn màu yêu thích</strong><small>Chạm để đổi màu ngay</small></div>
+        <div class="palette" role="group" aria-label="Bảng màu">
+          <button type="button" class="swatch" data-palette="rose" aria-label="Màu hồng" aria-pressed="true"><span
+              class="swatch-circle" style="--swatch:#f36b9e"></span><span>Hồng</span></button>
+          <button type="button" class="swatch" data-palette="peach" aria-label="Màu đào" aria-pressed="false"><span
+              class="swatch-circle" style="--swatch:#f49a73"></span><span>Đào</span></button>
+          <button type="button" class="swatch" data-palette="lilac" aria-label="Màu tím" aria-pressed="false"><span
+              class="swatch-circle" style="--swatch:#ab82ea"></span><span>Tím</span></button>
+          <button type="button" class="swatch" data-palette="mint" aria-label="Màu xanh mint" aria-pressed="false"><span
+              class="swatch-circle" style="--swatch:#56c5a4"></span><span>Mint</span></button>
+          <button type="button" class="swatch" data-palette="blue" aria-label="Màu xanh dương"
+            aria-pressed="false"><span class="swatch-circle" style="--swatch:#69a7ef"></span><span>Xanh</span></button>
+        </div>
+      </section> -->
+      <form id="random-form" novalidate>
+        <p class="section-label">KHOẢNG SỐ</p>
+        <div class="range-grid">
+          <div class="field"><label for="start">Từ số</label>
+            <div class="input-wrap"><input id="start" name="start" type="number" inputmode="numeric" step="1" value="1"
+                required /></div>
+          </div>
+          <div class="field"><label for="end">Đến số</label>
+            <div class="input-wrap"><input id="end" name="end" type="number" inputmode="numeric" step="1" value="100"
+                required /></div>
+          </div>
+        </div>
+        <div class="count-section count-row">
+          <div><label for="count" class="section-label">SỐ LƯỢNG</label>
+            <div style="font-size:12px;color:var(--muted)">Có thể trùng số</div>
+          </div>
+          <div class="stepper"><button type="button" id="decrease" aria-label="Giảm số lượng">−</button><input
+              id="count" name="count" type="number" inputmode="numeric" min="1" max="100" step="1" value="1"
+              aria-label="Số lượng số ngẫu nhiên" required /><button type="button" id="increase"
+              aria-label="Tăng số lượng">+</button></div>
+        </div>
+        <button class="generate" id="generate" type="submit"><span aria-hidden="true">✦</span> Random ngay <span
+            aria-hidden="true">✦</span></button>
+        <p class="error" id="error" role="alert" aria-live="polite"></p>
+      </form>
+      <section class="result-panel" aria-label="Kết quả random">
+        <div class="result-heading">KẾT QUẢ CỦA BẠN</div>
+        <p class="placeholder" id="placeholder">Con số may mắn đang đợi bạn ✨</p>
+        <ul class="results" id="results" aria-live="polite" aria-atomic="true"></ul>
+        <div class="result-bottom" id="result-actions" hidden><button class="copy" id="copy" type="button">Sao chép kết
+            quả</button></div>
+      </section>
+      <p class="footer">Made with <strong>♥</strong> for Bảo Uyên</p>
+    </main>
+  </div>
   <script>
-    const startInput = document.getElementById('start');
-    const endInput = document.getElementById('end');
-    const countInput = document.getElementById('count');
-    const errorOutput = document.getElementById('error');
-    const resultOutput = document.getElementById('result');
-    const generateButton = document.getElementById('generate');
+    'use strict';
+    const form = document.querySelector('#random-form');
+    const startInput = document.querySelector('#start');
+    const endInput = document.querySelector('#end');
+    const countInput = document.querySelector('#count');
+    const error = document.querySelector('#error');
+    const results = document.querySelector('#results');
+    const placeholder = document.querySelector('#placeholder');
+    const resultActions = document.querySelector('#result-actions');
+    const copyButton = document.querySelector('#copy');
+    let lastValues = [];
 
-    function randomInt(min, max) {
-      return Math.floor(Math.random() * (max - min + 1)) + min;
+    const root = document.documentElement;
+    const modeButton = document.querySelector('#mode-toggle');
+    const modeLabel = document.querySelector('#mode-label');
+    const paletteButtons = Array.from(document.querySelectorAll('[data-palette]'));
+    const paletteNames = ['rose', 'peach', 'lilac', 'mint', 'blue'];
+    const storageGet = key => { try { return localStorage.getItem(key); } catch { return null; } };
+    const storageSet = (key, value) => { try { localStorage.setItem(key, value); } catch { } };
+    const systemDark = window.matchMedia('(prefers-color-scheme: dark)');
+    let selectedMode = storageGet('bu-mode');
+    if (!['light', 'dark'].includes(selectedMode)) selectedMode = systemDark.matches ? 'dark' : 'light';
+    let selectedColor = storageGet('bu-palette');
+    if (!paletteNames.includes(selectedColor)) selectedColor = 'rose';
+
+    function applyAppearance() {
+      root.dataset.mode = selectedMode;
+      root.dataset.color = selectedColor;
+      const isDark = selectedMode === 'dark';
+      modeLabel.textContent = isDark ? 'Chế độ sáng' : 'Chế độ tối';
+      modeButton.setAttribute('aria-label', isDark ? 'Chuyển sang giao diện sáng' : 'Chuyển sang giao diện tối');
+      modeButton.setAttribute('aria-pressed', String(isDark));
+      paletteButtons.forEach(btn => btn.setAttribute('aria-pressed', String(btn.dataset.palette === selectedColor)));
+      const bg = getComputedStyle(root).getPropertyValue('--bg').trim();
+      document.querySelector('#theme-color').setAttribute('content', bg);
+    }
+    modeButton.addEventListener('click', () => {
+      selectedMode = selectedMode === 'dark' ? 'light' : 'dark';
+      storageSet('bu-mode', selectedMode);
+      applyAppearance();
+    });
+    paletteButtons.forEach(btn => btn.addEventListener('click', () => {
+      selectedColor = btn.dataset.palette;
+      storageSet('bu-palette', selectedColor);
+      applyAppearance();
+    }));
+    systemDark.addEventListener?.('change', event => {
+      if (storageGet('bu-mode') !== null) return;
+      selectedMode = event.matches ? 'dark' : 'light';
+      applyAppearance();
+    });
+    applyAppearance();
+
+    function secureRandomInt(min, max) {
+      // Rejection sampling avoids modulo bias for integer ranges up to 2^32.
+      const range = max - min + 1;
+      if (range > 0x100000000 || range < 1) throw new Error('Khoảng số quá lớn. Vui lòng chọn khoảng tối đa 4.294.967.296 số.');
+      const size = 0x100000000;
+      const limit = Math.floor(size / range) * range;
+      const buffer = new Uint32Array(1);
+      let sample;
+      do { crypto.getRandomValues(buffer); sample = buffer[0]; } while (sample >= limit);
+      return min + (sample % range);
     }
 
-    function generateRandoms() {
-      const start = Number(startInput.value);
-      const end = Number(endInput.value);
-      const count = Number(countInput.value);
-
-      errorOutput.textContent = '';
-      resultOutput.textContent = '';
-
-      if (!Number.isInteger(start) || !Number.isInteger(end)) {
-        errorOutput.textContent = 'Start and end must be integers.';
-        return;
-      }
-
-      if (!Number.isInteger(count) || count < 1) {
-        errorOutput.textContent = 'Number of randoms must be a positive integer.';
-        return;
-      }
-
-      if (start > end) {
-        errorOutput.textContent = 'Start must be less than or equal to end.';
-        return;
-      }
-
-      const values = [];
-      for (let i = 0; i < count; i += 1) {
-        values.push(randomInt(start, end));
-      }
-
-      resultOutput.textContent = values.join(', ');
+    function generateRandoms(event) {
+      event.preventDefault();
+      error.textContent = '';
+      const min = startInput.value.trim() === '' ? NaN : Number(startInput.value);
+      const max = endInput.value.trim() === '' ? NaN : Number(endInput.value);
+      const count = countInput.value.trim() === '' ? NaN : Number(countInput.value);
+      if (![min, max].every(Number.isSafeInteger)) { error.textContent = 'Vui lòng nhập số nguyên hợp lệ cho khoảng số.'; return; }
+      if (!Number.isInteger(count) || count < 1 || count > 100) { error.textContent = 'Số lượng phải từ 1 đến 100.'; return; }
+      if (min > max) { error.textContent = 'Số bắt đầu phải nhỏ hơn hoặc bằng số kết thúc.'; return; }
+      if (max - min + 1 > 0x100000000) { error.textContent = 'Khoảng số quá lớn (tối đa 4.294.967.296 giá trị).'; return; }
+      try {
+        const values = Array.from({ length: count }, () => secureRandomInt(min, max));
+        lastValues = values;
+        results.replaceChildren();
+        results.classList.toggle('single', values.length === 1);
+        const fragment = document.createDocumentFragment();
+        values.forEach(value => { const li = document.createElement('li'); li.textContent = value.toLocaleString('vi-VN'); fragment.appendChild(li); });
+        results.appendChild(fragment);
+        placeholder.hidden = true;
+        resultActions.hidden = false;
+        copyButton.textContent = 'Sao chép kết quả';
+        if (navigator.vibrate) navigator.vibrate(15);
+      } catch (e) { error.textContent = e.message || 'Không thể tạo số ngẫu nhiên trên trình duyệt này.'; }
     }
 
-    generateButton.addEventListener('click', generateRandoms);
-
-    document.addEventListener('keydown', (event) => {
-      if (event.repeat) {
-        return;
-      }
-
-      if (event.key === 'Enter' || event.key === ' ') {
-        event.preventDefault();
-        generateRandoms();
-      }
+    form.addEventListener('submit', generateRandoms);
+    document.querySelector('#decrease').addEventListener('click', () => {
+      const value = Number(countInput.value); countInput.value = Math.max(1, Number.isFinite(value) ? value - 1 : 1);
+    });
+    document.querySelector('#increase').addEventListener('click', () => {
+      const value = Number(countInput.value); countInput.value = Math.min(100, Number.isFinite(value) ? value + 1 : 1);
+    });
+    copyButton.addEventListener('click', async () => {
+      if (!lastValues.length) return;
+      const content = lastValues.join(', ');
+      try {
+        if (navigator.clipboard && window.isSecureContext) await navigator.clipboard.writeText(content);
+        else {
+          const input = document.createElement('textarea'); input.value = content; input.style.position = 'fixed'; input.style.opacity = '0'; document.body.append(input); input.select();
+          const success = document.execCommand('copy'); input.remove(); if (!success) throw new Error('Copy failed');
+        }
+        copyButton.textContent = 'Đã sao chép ✓';
+      } catch { error.textContent = 'Không sao chép tự động được. Hãy chọn và sao chép kết quả thủ công.'; }
     });
   </script>
 </body>
